@@ -1,4 +1,9 @@
 <script setup>
+import { useVuelidate } from "@vuelidate/core";
+import { required, email } from "@vuelidate/validators";
+import formError from "~/components/form/form-error.vue";
+import baseInput from "~/components/form/base-input.vue";
+import baseBtn from "~/components/form/base-btn.vue";
 definePageMeta({
     layout: "auth",
 });
@@ -6,35 +11,73 @@ const loginInputs = ref({
     email: "",
     password: "",
 });
+const rules = {
+    email: { required, email },
+    password: { required },
+};
+
+const v$ = useVuelidate(rules, loginInputs);
+const loading = ref(false);
+
+async function submitInput(event) {
+    const isValid = v$.value.$validate();
+    if (!isValid) return;
+    try {
+        loading.value = true;
+        await $fetch("/api/auth/login", {
+            method: "POST",
+            body: JSON.stringify(loginInputs.value),
+        });
+        loading.value = false;
+    } catch (error) {
+        loading.value = false;
+        showLoginOrSignUpError(error)
+    }
+}
 </script>
 <template>
-    <div
-        class="bg-white flex justify-center items-center h-screen container"
-    >
-        <form>
-            <h1>Sign In</h1>
-            <fieldset>
-                <input
-                    type=" email"
-                    name="email"
-                    placeholder="info@gmail.com"
-                    autocomplete="given-namc                      e"
-                />
+  <div class="bg-white h-screen">
+    <div class="flex justify-between">
+      <div></div>
+      <div class="w-[300px] mt-20">
+        <div class="flex flex-col gap-2">
+          <h1 class="text-2xl mb-3">Sign In</h1>
 
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
 
-                />
-            </fieldset>
-            <input type="submit" value="Subscribe" />
-            <h4>
-                Dont have an account ?
-                <nuxt-link to="/auth/signup" class="text-blue-500"
-                    >Sign Up</nuxt-link
-                >
-            </h4>
-        </form>
+          <form-error :errors="v$.email.$errors">
+            <base-input
+              v-model="loginInputs.email"
+              :type="'text'"
+              :placeholder="'info@gmail.com'"
+            />
+          </form-error>
+
+          <form-error :errors="v$.password.$errors">
+            <base-input
+              v-model="loginInputs.password"
+              :type="'password'"
+              :placeholder="'password'"
+            />
+          </form-error>
+
+          <base-btn
+            @click="submitInput"
+            :loading="loading"
+            label="Sign in"
+          ></base-btn>
+          <p
+            class="text-sm font-normal text-center text-gray-700 dark:text-gray-500 sm:text-start"
+          >
+            Dont have an account ?
+            <NuxtLink
+              to="/auth/signup"
+              class="text-indigo-500 hover:text-brand-600 font-semibold"
+              >Sign up</NuxtLink
+            >
+          </p>
+        </div>
+      </div>
+      <div></div>
     </div>
+  </div>
 </template>
