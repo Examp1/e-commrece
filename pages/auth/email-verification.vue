@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import baseBtn from "~/components/form/base-btn.vue";
+import BaseBtn from "~/components/base-components/base-btn.vue";
 import VOtpInput from "vue3-otp-input";
 
 const signupStore = useSignUpStore();
@@ -28,7 +28,8 @@ async function verifyEmail() {
         });
         loading.value = false;
         successMsg(res?.message);
-        router.push("/auth/signin");
+        window.location.href = "/auth/signin";
+        // router.push("/auth/signin");
     } catch (error) {
         loading.value = false;
         console.log("error:", error?.message);

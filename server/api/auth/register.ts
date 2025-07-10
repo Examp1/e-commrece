@@ -1,20 +1,20 @@
 import prisma from "~/lib/prisma";
 import { hashPassword } from "./modules/bcrypt";
-import { loginShema } from "./modules/validateUser";
+import { registerShema } from "./modules/validateUser";
 import { generateOTP } from "./modules/generate-otp-code";
 import { sendEmailVerification } from "./modules/send-email-verfication";
 import { USER_EMAIL_TYPE } from "./modules/user.constant";
 
 export default defineEventHandler(async (event) => {
-    const { email, password } = await readBody(event);
+    const { name, email, password } = await readBody(event);
 
-    const result = loginShema.safeParse({ email, password });
+    const result = registerShema.safeParse({ name, email, password });
 
     if (!result.success) {
         throw createError({
             statusCode: 400,
             message: "Validation error",
-            data: result.error.flatten()
+            data: result.error.flatten(),
         });
     }
 
@@ -37,6 +37,7 @@ export default defineEventHandler(async (event) => {
 
     const user = await prisma.user.create({
         data: {
+            name: name,
             email: email,
             isValidEmail: USER_EMAIL_TYPE.INVALID_EMAIL,
             otpCode: otpCode,

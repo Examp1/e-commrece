@@ -3,6 +3,7 @@ import { comparePassword } from "./modules/bcrypt";
 import { loginShema } from "./modules/validateUser";
 import { signAccessToken, signRefreshToken } from "./modules/jwtToken";
 import { tr } from "zod/v4/locales";
+import { USER_EMAIL_TYPE } from "./modules/user.constant";
 
 export default defineEventHandler(async (event) => {
     const { email, password } = await readBody(event);
@@ -20,6 +21,7 @@ export default defineEventHandler(async (event) => {
     const userExist = await prisma.user.findUnique({
         where: {
             email: email,
+            isValidEmail: USER_EMAIL_TYPE.VALID_EMAIL,
         },
     });
 
@@ -42,9 +44,13 @@ export default defineEventHandler(async (event) => {
                 accessToken,
                 refreshToken,
             },
-            user: userExist,
-            isLoggedIn: true
-        }
+            user: {
+                id: userExist.id,
+                email: userExist.email,
+                name: userExist.name,
+            },
+            isLoggedIn: true,
+        };
         return { message: "User loggin succesfully", data };
     } else {
         throw createError({
