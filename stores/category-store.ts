@@ -4,14 +4,24 @@ export const useCategoryStore = defineStore("categoy-store", () => {
         name: "",
     });
 
-    const edit = ref(false)
-    // if value = true 
-    // edit
-    // else 
-    // create
+    const edit = ref(false);
+
+    async function fetchCategories() {
+        const { data, refresh: getCategories } = await useFetch(
+            "/api/admin/category/get-category",
+            {
+                headers: {
+                    Accept: "aplication/json",
+                    // Autorization: `Bearer ${userData.token}`
+                },
+            },
+        );
+        return { data, getCategories };
+    }
 
     return {
         categoryInputs,
-        edit
-    }
+        edit,
+        fetchCategories
+    };
 });

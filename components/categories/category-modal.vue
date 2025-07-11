@@ -20,7 +20,7 @@ async function createCategory() {
             body: JSON.stringify(categoryInputs.value),
         });
         loading.value = false;
-        edit.value = false
+        edit.value = false;
         emit("getCategories");
         successMsg(res?.message);
     } catch (error) {
@@ -32,7 +32,7 @@ async function createCategory() {
 <template>
     <base-modal v-show="show">
         <template #title>
-            <h1 class="text-2xl">Create category</h1>
+            <h1 class="text-2xl">{{ edit ? "Update" : "Create" }} Product</h1>
         </template>
 
         <template #body>
@@ -48,7 +48,11 @@ async function createCategory() {
                 class="bg-gray-400"
                 label="Close"
             ></base-btn>
-            <base-btn @click="createCategory" :loading label="Save"></base-btn>
+            <base-btn
+                @click="createCategory"
+                :loading
+                :label="edit ? 'Update' : 'Save'"
+            ></base-btn>
         </template>
     </base-modal>
 </template>

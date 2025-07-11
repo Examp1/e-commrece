@@ -16,15 +16,7 @@ function toggleCategoryModal() {
     isShow.value = !isShow.value;
 }
 
-const { data, refresh: getCategories } = await useFetch(
-    "/api/admin/category/get-category",
-    {
-        headers: {
-            Accept: "aplication/json",
-            // Autorization: `Bearer ${userData.token}`
-        },
-    },
-);
+const { data, getCategories } = await categoryStore.fetchCategories()
 
 function editCategory(category) {
     categoryInputs.value = category
