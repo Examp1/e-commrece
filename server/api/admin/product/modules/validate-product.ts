@@ -21,3 +21,6 @@ export const productShema = z.object({
     ]),
     categoryId: z.number().positive("Category should be greather than 0"),
 });
+export const deleteProductShema = z.object({
+    id: z.number().positive("Id should be a number"),
+});

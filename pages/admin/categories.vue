@@ -37,7 +37,6 @@ function editCategory(category) {
                 ></category-modal>
             </ClientOnly>
         </div>
-        {{ categoryInputs }}
         <category-table
             :categories="data.categories"
             @editCategory="editCategory"

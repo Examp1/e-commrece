@@ -31,6 +31,17 @@ export const useProductStore = defineStore("product-store", () => {
         limit.value = productsData.value?.metadata.limit;
         page.value = productsData.value?.metadata.page;
     }
+    async function deleteProduct(id: number) {
+        const res = await $fetch("/api/admin/product/delete", {
+            headers: {
+                Accept: "aplication/json",
+                // Autorization: `Bearer ${userData.token}`
+            },
+            method: "DELETE",
+            body: JSON.stringify({ id: id }),
+        });
+        successMsg(res?.message);
+    }
 
     async function changePage(newPage: number) {
         page.value = newPage;
@@ -44,5 +55,6 @@ export const useProductStore = defineStore("product-store", () => {
         productsData,
         fetchProducts,
         changePage,
+        deleteProduct,
     };
 });

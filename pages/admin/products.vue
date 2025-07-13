@@ -27,7 +27,10 @@ function editProduct(product) {
 }
 
 async function deleteProduct(product) {
-    console.log(product);
+    promptUser('Do yo want to delete this ?'). then(async() => {
+        await productStore.deleteProduct(product.id)
+        await productStore.fetchProducts();
+    }).catch(error => console.log(error))
 }
 
 </script>
@@ -48,6 +51,7 @@ async function deleteProduct(product) {
         <product-table
             :productsData="productsData"
             @editProduct="editProduct"
+            @deleteProduct="deleteProduct"
         >
             <template #btn>
                 <base-btn label="Create" @click="toggleProductModal"></base-btn>
