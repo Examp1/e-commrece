@@ -6,6 +6,9 @@ export const useProductStore = defineStore("product-store", () => {
         price: 0,
         categoryId: "",
     });
+    const productId = ref(null);
+    const showUploadImageModal = ref(false);
+    const showUploadedImageModal = ref(false);
 
     const edit = ref<boolean>(false);
     const search = ref<string>("");
@@ -13,6 +16,8 @@ export const useProductStore = defineStore("product-store", () => {
     // pagination
     const page = ref<number>(1);
     const limit = ref<number>(10);
+
+    const uploadedProductImages = ref([]);
 
     async function fetchProducts() {
         const { data, refresh } = await useFetch("/api/admin/product/get", {
@@ -48,13 +53,38 @@ export const useProductStore = defineStore("product-store", () => {
         await fetchProducts();
     }
 
+    function uploadImagePayload(productId: number, file: string) {
+        return new Promise((resolve, reject) => {
+            try {
+                const formData = new FormData();
+
+                // formData.append("Authorization", headers?.Authorization);
+                formData.append("file", file);
+                formData.append("productId", productId.toString());
+
+                const requestOptions = {
+                    method: "POST",
+                    body: formData,
+                };
+                resolve(requestOptions);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
     return {
         poroductInputs,
         edit,
+        productId,
         search,
+        showUploadImageModal,
+        showUploadedImageModal,
         productsData,
+        uploadedProductImages,
         fetchProducts,
         changePage,
         deleteProduct,
+        uploadImagePayload,
     };
 });

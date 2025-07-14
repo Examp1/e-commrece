@@ -2,7 +2,7 @@
 import TrashIcon from '../icons/TrashIcon.vue';
 
 defineProps(["productsData"]);
-const emit = defineEmits(["editProduct", "deleteProduct"]);
+const emit = defineEmits(["editProduct", "deleteProduct", "uploadImage", "showUploadedImages"]);
 
 const productStore = useProductStore();
 const { search } = storeToRefs(productStore);
@@ -70,6 +70,18 @@ const searchProduct = _debounce(async function (event) {
                         class="flex justify-center hover:bg-slate-200 text-gray-900 font-bold py-2 px-4 rounded flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <TrashIcon />
+                    </button>
+                    <button
+                        @click="emit('uploadImage', product)"
+                        class="flex justify-center hover:bg-slate-200 text-gray-900 font-bold py-2 px-4 rounded flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <ImageIcon />
+                    </button>
+                    <button
+                        @click="emit('showUploadedImages', product)"
+                        class="flex justify-center hover:bg-slate-200 text-gray-900 font-bold py-2 px-4 rounded flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <EyeIcon />
                     </button>
                 </td>
             </tr>
