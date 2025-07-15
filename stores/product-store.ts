@@ -18,12 +18,12 @@ export const useProductStore = defineStore("product-store", () => {
     const limit = ref<number>(10);
 
     const uploadedProductImages = ref([]);
+    const headers = useHeaders();
 
     async function fetchProducts() {
         const { data, refresh } = await useFetch("/api/admin/product/get", {
             headers: {
-                Accept: "aplication/json",
-                // Autorization: `Bearer ${userData.token}`
+                ...headers,
             },
             query: {
                 search: search.value,
@@ -39,8 +39,7 @@ export const useProductStore = defineStore("product-store", () => {
     async function deleteProduct(id: number) {
         const res = await $fetch("/api/admin/product/delete", {
             headers: {
-                Accept: "aplication/json",
-                // Autorization: `Bearer ${userData.token}`
+                ...headers
             },
             method: "DELETE",
             body: JSON.stringify({ id: id }),
@@ -63,6 +62,9 @@ export const useProductStore = defineStore("product-store", () => {
                 formData.append("productId", productId.toString());
 
                 const requestOptions = {
+                    headers: {
+                        ...headers,
+                    },
                     method: "POST",
                     body: formData,
                 };

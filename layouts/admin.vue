@@ -1,11 +1,11 @@
 <script setup>
-import CategoryIcon from '~/components/icons/CategoryIcon.vue';
-import DashboardIcon from '~/components/icons/DashboardIcon.vue';
-import PaymentIcon from '~/components/icons/PaymentIcon.vue';
-import ProductIcon from '~/components/icons/ProductIcon.vue';
-import UserIcon from '~/components/icons/UserIcon.vue';
+import CategoryIcon from "~/components/icons/CategoryIcon.vue";
+import DashboardIcon from "~/components/icons/DashboardIcon.vue";
+import PaymentIcon from "~/components/icons/PaymentIcon.vue";
+import ProductIcon from "~/components/icons/ProductIcon.vue";
+import UserIcon from "~/components/icons/UserIcon.vue";
 
-const userCookie = useCookie("user", userCookieSettigns)
+const userCookie = useCookie("user", userCookieSettigns);
 
 const links = ref([
     {
@@ -37,8 +37,13 @@ const links = ref([
 const drawerOpen = ref(true);
 const showMenu = ref(false);
 
+function logoutUser() {
+    userCookie.value = null;
+    window.location.href = "/auth/signin";
+}
+
 function toggleDrawer() {
-    drawerOpen.value = !drawerOpen.value
+    drawerOpen.value = !drawerOpen.value;
 }
 </script>
 <template>
@@ -125,14 +130,14 @@ function toggleDrawer() {
                         >
                             <div class="p-4 border-b">
                                 <p class="font-semibold">
-                                    {{ userCookie?.data.user?.name }}
+                                    {{ userCookie?.user?.name }}
                                 </p>
                                 <p class="text-sm text-gray-600">
-                                    {{ userCookie?.data.user?.email }}
+                                    {{ userCookie?.user?.email }}
                                 </p>
                             </div>
                             <ul>
-                                <li @click="$logout()">
+                                <li @click="logoutUser()">
                                     <a
                                         href="#"
                                         class="block text-red-500 px-4 py-2 hover:bg-gray-100"
@@ -146,7 +151,7 @@ function toggleDrawer() {
             </header>
 
             <main class="flex-1 overflow-y-auto p-6">
-                <slot/>
+                <slot />
             </main>
         </div>
     </div>
