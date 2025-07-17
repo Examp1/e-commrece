@@ -1,5 +1,6 @@
 import prisma from "~/lib/prisma";
 import { productShema } from "./modules/validate-product";
+import slugify from "slugify";
 export default defineEventHandler(async (event) => {
     const { id, name, color, price, categoryId } = await readBody(event);
     const result = productShema.safeParse({ name, color, price, categoryId });
@@ -13,10 +14,11 @@ export default defineEventHandler(async (event) => {
 
     const product = await prisma.product.update({
         where: {
-            id: id
+            id: id,
         },
         data: {
             name: name,
+            slug: slugify(name),
             color: color,
             categoryId: categoryId,
             price: price.toString(),

@@ -3,17 +3,31 @@ export default defineNuxtConfig({
     compatibilityDate: "2025-05-15",
     devtools: { enabled: true },
     // css: ["@picocss/pico"],
+    runtimeConfig: {
+        // private is accessible only the server
+        JWT_TOKEN_KEY: process.env.JWT_TOKEN_KEY,
+        REFRESH_TOKEN_KEY: process.env.REFRESH_TOKEN_KEY,
+        DATABASE_URL: process.env.DATABASE_URL,
+        public: {
+            // public is accessible only the client
+        },
+    },
     components: [
         {
             path: "~/components",
             pathPrefix: false,
         },
     ],
+    pinia: {
+        storesDirs: ["./stores/**"],
+    },
     modules: [
         "@nuxtjs/tailwindcss",
         "@pinia/nuxt",
         "@prisma/nuxt",
         "nuxt-nodemailer",
+        "@nuxt/image",
+        "@nuxt/icon",
     ],
     nodemailer: {
         from: "E-commerse app <noreply@app.com>",
@@ -25,13 +39,13 @@ export default defineNuxtConfig({
             pass: process.env.MAIL_TRAP_PASSWORD,
         },
     },
-    runtimeConfig: {
-        // private is accessible only the server
-        JWT_TOKEN_KEY: process.env.JWT_TOKEN_KEY,
-        REFRESH_TOKEN_KEY: process.env.REFRESH_TOKEN_KEY,
-        DATABASE_URL: process.env.DATABASE_URL,
-        public: {
-            // public is accessible only the client
-        },
+
+    tailwindcss: { exposeConfig: true },
+    image: {
+        // Options
+    },
+    icon: {
+        mode: "css",
+        cssLayer: "base",
     },
 });

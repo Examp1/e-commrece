@@ -7,6 +7,16 @@ export const useProductStore = defineStore("product-store", () => {
         categoryId: "",
     });
     const productId = ref(null);
+    const productColors = ref([
+        "red",
+        "black",
+        "white",
+        "green",
+        "blue",
+        "yellow",
+        "orange",
+        "gray",
+    ]);
     const showUploadImageModal = ref(false);
     const showUploadedImageModal = ref(false);
 
@@ -39,7 +49,7 @@ export const useProductStore = defineStore("product-store", () => {
     async function deleteProduct(id: number) {
         const res = await $fetch("/api/admin/product/delete", {
             headers: {
-                ...headers
+                ...headers,
             },
             method: "DELETE",
             body: JSON.stringify({ id: id }),
@@ -84,6 +94,7 @@ export const useProductStore = defineStore("product-store", () => {
         showUploadedImageModal,
         productsData,
         uploadedProductImages,
+        productColors,
         fetchProducts,
         changePage,
         deleteProduct,

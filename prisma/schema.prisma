@@ -9,31 +9,31 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  name     String?
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  name         String?
   isValidEmail Int
-  otpCode String
-  password String
+  otpCode      String
+  password     String
 }
 
 model Category {
-  id       Int     @id @default(autoincrement())
-  name     String @unique
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
   products Product[]
 }
 
 model Product {
-  id           Int                  @id @default(autoincrement())
-  name         String
-  color        String
-  price        String
-  categoryId   Int
-  category     Category             @relation(fields: [categoryId], references: [id])
-  images       Image[]
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  name       String
+  color      String
+  price      String
+  categoryId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  slug       String?  @db.VarChar(200)
+  images     Image[]
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Image {
