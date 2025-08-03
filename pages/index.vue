@@ -1,5 +1,14 @@
+<script setup lang="ts"></script>
 <template>
-    <div class="bg-slate-200 h-screen">
-        <h1>Welcome page</h1>
+    <div class="container flex items-start gap-16">
+        <Filters />
+
+        <div class="w-full">
+            <div
+                class="flex items-center justify-between w-full gap-4 mt-8 md:gap-8"
+            ></div>
+            <ProductGrid />
+        </div>
     </div>
+    <!-- <NoProductsFound v-else>Could not fetch products from your store. Please check your configuration.</NoProductsFound> -->
 </template>
