@@ -1,10 +1,39 @@
 <script setup lang="ts">
 const attributesWithTerms = ref([{ slug: "pa_colour", name: "red" }]);
 
+const productEcomStore = useProductEcomStore();
 const categoryStore = useCategoryStore();
-const { data } = await categoryStore.fetchCategories();
 const productStore = useProductStore();
+const filterEcomStore = useFilterEcomStore();
+const { data } = await categoryStore.fetchCategories();
 const { productColors } = storeToRefs(productStore);
+const { selectedCategories, selectedColors, selectedPrices } =
+    storeToRefs(filterEcomStore);
+
+async function fetchProductByCategories(categories: number[]) {
+    selectedCategories.value = categories;
+    await productEcomStore.fetchProducts(
+        categories,
+        selectedPrices.value,
+        selectedColors.value,
+    );
+}
+async function fetchProductByColors(colors: string[]) {
+    selectedColors.value = colors;
+    await productEcomStore.fetchProducts(
+        selectedCategories.value,
+        selectedPrices.value,
+        colors,
+    );
+}
+async function fetchProductByPrice(prices: number[]) {
+    selectedPrices.value = prices;
+    await productEcomStore.fetchProducts(
+        selectedCategories.value,
+        prices,
+        selectedColors.value,
+    );
+}
 </script>
 
 <template>
@@ -24,7 +53,7 @@ const { productColors } = storeToRefs(productStore);
                 />
             </div>
 
-            <LazyStarRatingFilter @fetchProducts="fetchProductByStars" />
+            <!-- <LazyStarRatingFilter @fetchProducts="fetchProductByStars" />-->
             <LazyResetFiltersButton />
         </div>
     </aside>

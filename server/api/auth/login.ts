@@ -2,7 +2,6 @@ import prisma from "~/lib/prisma";
 import { comparePassword } from "./modules/bcrypt";
 import { loginShema } from "./modules/validateUser";
 import { signAccessToken, signRefreshToken } from "./modules/jwtToken";
-import { tr } from "zod/v4/locales";
 import { USER_EMAIL_TYPE } from "./modules/user.constant";
 
 export default defineEventHandler(async (event) => {

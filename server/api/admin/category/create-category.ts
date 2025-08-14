@@ -1,7 +1,7 @@
 import prisma from "~/lib/prisma";
 import { categoryShema } from "./modules/validate-category";
-import { withAuth } from "~/utils/withAuth";
-export default withAuth(async (event) => {
+// import { withAuth } from "~/utils/withAuth";
+export default defineEventHandler(async (event) => {
     const { name } = await readBody(event);
     const result = categoryShema.safeParse({ name });
     if (!result.success) {

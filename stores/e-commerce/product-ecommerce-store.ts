@@ -4,13 +4,23 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const page = ref<number>(1);
     const limit = ref<number>(10);
 
-    async function fetchProducts() {
-        const { data, refresh } = await useFetch("/api/e-commerce/get-products", {
-            query: {
-                page: page.value,
-                limit: limit.value,
+    async function fetchProducts(
+        categories?: number[],
+        prices?: number[],
+        colors?: string[],
+    ) {
+        const { data, refresh } = await useFetch(
+            "/api/e-commerce/get-products",
+            {
+                query: {
+                    categories: categories ? categories.toString() : [],
+                    prices: prices ? prices.toString() : [],
+                    colors: colors ? colors.toString() : [],
+                    page: page.value,
+                    limit: limit.value,  
+                },
             },
-        });
+        );
 
         productsData.value = data.value;
         limit.value = productsData.value?.metadata.limit;
