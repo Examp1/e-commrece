@@ -4,11 +4,9 @@ const attributesWithTerms = ref([{ slug: "pa_colour", name: "red" }]);
 const productEcomStore = useProductEcomStore();
 const categoryStore = useCategoryStore();
 const productStore = useProductStore();
-const filterEcomStore = useFilterEcomStore();
 const { data } = await categoryStore.fetchCategories();
 const { productColors } = storeToRefs(productStore);
-const { selectedCategories, selectedColors, selectedPrices } =
-    storeToRefs(filterEcomStore);
+const { selectedCategories, selectedColors, selectedPrices } = storeToRefs(productEcomStore)
 
 async function fetchProductByCategories(categories: number[]) {
     selectedCategories.value = categories;
