@@ -21,7 +21,7 @@ const v$ = useVuelidate(rules, loginInputs);
 const loading = ref(false);
 const router = useRouter();
 
-const userCookie = useCookie("user", userCookieSettigns);
+const userCookie = useCookie("user", userCookieSettings);
 
 async function submitInput(event) {
     const isValid = v$.value.$validate();

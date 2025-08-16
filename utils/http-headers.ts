@@ -5,7 +5,7 @@ export function useHeaders() {
             refreshToken: string,
         }
 
-    }> = useCookie("user", userCookieSettigns);
+    }> = useCookie("user", userCookieSettings);
     const accessToken = userCookie.value?.token.accessToken;
     console.log(accessToken);
     const headers = {

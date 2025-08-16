@@ -3,7 +3,7 @@ import { hashPassword } from "./modules/bcrypt";
 import { registerShema } from "./modules/validateUser";
 import { generateOTP } from "./modules/generate-otp-code";
 import { sendEmailVerification } from "./modules/send-email-verfication";
-import { USER_EMAIL_TYPE } from "./modules/user.constant";
+import { USER_EMAIL_TYPE, USER_ROLE } from "./modules/user.constant";
 
 export default defineEventHandler(async (event) => {
     const { name, email, password } = await readBody(event);
@@ -42,6 +42,7 @@ export default defineEventHandler(async (event) => {
             isValidEmail: USER_EMAIL_TYPE.INVALID_EMAIL,
             otpCode: otpCode,
             password: hashPwd,
+            role: USER_ROLE.CUSTOMER
         },
     });
 

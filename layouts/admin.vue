@@ -5,7 +5,7 @@ import PaymentIcon from "~/components/icons/PaymentIcon.vue";
 import ProductIcon from "~/components/icons/ProductIcon.vue";
 import UserIcon from "~/components/icons/UserIcon.vue";
 
-const userCookie = useCookie("user", userCookieSettigns);
+const userCookie = useCookie("user", userCookieSettings);
 
 const links = ref([
     {

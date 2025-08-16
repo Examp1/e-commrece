@@ -7,7 +7,7 @@ const quantity = ref<number>(1);
 const products = ref([]);
 const route = useRoute();
 
-await productEcomStore
+productEcomStore
     .fetchSingleProductData(route.params?.slug)
     .then(async () => {
         const categoryId = singleProductData?.categoryId;

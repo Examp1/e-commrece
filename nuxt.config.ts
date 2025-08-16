@@ -9,7 +9,8 @@ export default defineNuxtConfig({
         REFRESH_TOKEN_KEY: process.env.REFRESH_TOKEN_KEY,
         DATABASE_URL: process.env.DATABASE_URL,
         public: {
-            FALL_BACK_IMG_URL: "./images/placeholder.jpg"
+            FALL_BACK_IMG_URL: "./images/placeholder.jpg",
+            DEFAULT_USER_AVATAR: "/images/placeholder.jpg",
         },
     },
     components: [
