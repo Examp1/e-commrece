@@ -10,7 +10,7 @@ export default defineNuxtConfig({
         DATABASE_URL: process.env.DATABASE_URL,
         public: {
             FALL_BACK_IMG_URL: "./images/placeholder.jpg",
-            DEFAULT_USER_AVATAR: "/images/placeholder.jpg",
+            DEFAULT_USER_AVATAR: "https://i.pravatar.cc/150?img=3",
         },
     },
     components: [

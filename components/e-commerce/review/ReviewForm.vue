@@ -29,15 +29,9 @@ function getSelectedStarNumber(val: number) {
     productReviewInputs.value.starNumber = val;
 }
 
-// const productReviewStore = useProductReviewStore();
-// const { productReviewInputs } = storeToRefs(productReviewStore);
 </script>
 
 <template>
-    <pre>
-    {{ productReviewInputs }}
-  </pre
-    >
     <transition class="ease-in-out transform transition-all" name="scale-y">
         <form @submit.prevent="addComment" class="writeReview">
             <div class="w-full text-gray-500">

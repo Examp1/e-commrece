@@ -16,7 +16,6 @@ const isOpen = ref(true);
 // Update the URL when the checkbox is changed
 const checkboxChanged = () => {
 //   setFilter(attribute.slug, selectedTerms.value);
-console.log('')
 };
 </script>
 

@@ -81,8 +81,7 @@ function displayMissingStars(starPercents) {
       {{ show ? "Close" : "Write a review" }}
     </button>
     <!-- Review form -->
-
-    <ReviewForm></ReviewForm>
+    <ReviewForm v-show="show"></ReviewForm>
     <!-- end Review form  -->
   </div>
 </template>

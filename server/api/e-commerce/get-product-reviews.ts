@@ -1,7 +1,7 @@
 import prisma from "~/lib/prisma";
 export default defineEventHandler(async (event) => {
     const query = getQuery(event);
-    const productId = query?.productId as number;
+    const productId = query?.productId as string;
 
     if (typeof productId === "undefined") {
         throw createError({
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const productReviews = await prisma.product.findMany({
-        where: { id: productId },
+        where: { id: parseInt(productId) },
         include: {
             reviews: true,
         },
