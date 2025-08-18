@@ -37,7 +37,7 @@ async function submitInput(event) {
         router.push("/admin/dashboard");
     } catch (error) {
         loading.value = false;
-        showLoginOrSignUpError(error);
+        showApiError(error);
     }
 }
 </script>

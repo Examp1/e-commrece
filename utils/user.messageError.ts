@@ -1,4 +1,4 @@
-export function showLoginOrSignUpError(error: any) {
+export function showApiError(error: any) {
     const errors = error?.data?.data?.fieldErrors;
 
     if (typeof error?.data?.message !== "undefined") {

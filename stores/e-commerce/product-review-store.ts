@@ -22,6 +22,7 @@ export const useProductReviewStore = defineStore("product-review-store", () => {
 
     return {
         productReviewInputs,
+        productReviewData,
         fetcProductReviews,
     };
 });

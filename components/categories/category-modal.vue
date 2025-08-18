@@ -25,7 +25,7 @@ async function createCategory() {
         successMsg(res?.message);
     } catch (error) {
         loading.value = false;
-        showLoginOrSignUpError(error);
+        showApiError(error);
     }
 }
 </script>

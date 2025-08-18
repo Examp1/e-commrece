@@ -34,7 +34,7 @@ async function submitInput() {
         router.push("/auth/email-verification");
     } catch (error) {
         loading.value = false;
-        showLoginOrSignUpError(error);
+        showApiError(error);
     }
 }
 </script>
