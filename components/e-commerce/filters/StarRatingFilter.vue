@@ -11,7 +11,6 @@ const isOpen = ref(true);
 const emit=defineEmits(['fetchProducts'])
 
 const radioClicked = (rating) => {
-
   selectedStar.value=parseInt(rating)
     emit('fetchProducts',parseInt(rating))
 
@@ -19,6 +18,7 @@ const radioClicked = (rating) => {
 </script>
 
 <template>
+
   <div>
     <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center" @click="isOpen = !isOpen">
       <span>Rating</span>  

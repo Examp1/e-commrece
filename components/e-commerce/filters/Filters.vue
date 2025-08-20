@@ -6,7 +6,8 @@ const categoryStore = useCategoryStore();
 const productStore = useProductStore();
 const { data } = await categoryStore.fetchCategories();
 const { productColors } = storeToRefs(productStore);
-const { selectedCategories, selectedColors, selectedPrices } = storeToRefs(productEcomStore)
+const { selectedCategories, selectedColors, selectedPrices, selectedStar } =
+    storeToRefs(productEcomStore);
 
 async function fetchProductByCategories(categories: number[]) {
     selectedCategories.value = categories;
@@ -14,6 +15,7 @@ async function fetchProductByCategories(categories: number[]) {
         categories,
         selectedPrices.value,
         selectedColors.value,
+        selectedStar.value,
     );
 }
 async function fetchProductByColors(colors: string[]) {
@@ -22,6 +24,7 @@ async function fetchProductByColors(colors: string[]) {
         selectedCategories.value,
         selectedPrices.value,
         colors,
+        selectedStar.value,
     );
 }
 async function fetchProductByPrice(prices: number[]) {
@@ -30,6 +33,16 @@ async function fetchProductByPrice(prices: number[]) {
         selectedCategories.value,
         prices,
         selectedColors.value,
+        selectedStar.value,
+    );
+}
+async function fetchProductByStars(star: number) {
+    selectedStar.value = star;
+    await productEcomStore.fetchProducts(
+        selectedCategories.value,
+        selectedPrices.value,
+        selectedColors.value,
+        star,
     );
 }
 </script>
@@ -51,7 +64,7 @@ async function fetchProductByPrice(prices: number[]) {
                 />
             </div>
 
-            <!-- <LazyStarRatingFilter @fetchProducts="fetchProductByStars" />-->
+            <LazyStarRatingFilter @fetchProducts="fetchProductByStars" />
             <LazyResetFiltersButton />
         </div>
     </aside>

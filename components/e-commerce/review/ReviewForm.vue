@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const userCookie = useCookie("user", userCookieSettings);
 const productEcomStore = useProductEcomStore();
+const productReviewStore = useProductReviewStore()
 const { singleProductData } = storeToRefs(productEcomStore);
 
 const productReviewInputs = ref({
@@ -22,8 +23,10 @@ async function addComment() {
         });
         successMsg(res.message)
     } catch (error) {
-      showError(error?.data.message)
+      showApiError(error)
     }
+    loading.value = false;
+    await productReviewStore.fetcProductReviews(productReviewInputs.value.productId)
 }
 function getSelectedStarNumber(val: number) {
     productReviewInputs.value.starNumber = val;

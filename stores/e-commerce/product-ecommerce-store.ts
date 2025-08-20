@@ -9,19 +9,34 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const selectedCategories = ref<number[]>([]);
     const selectedColors = ref<string[]>([]);
     const selectedPrices = ref<number[]>([]);
+    const selectedStar = ref<number>();
 
     async function fetchProducts(
         categories?: number[],
         prices?: number[],
         colors?: string[],
+        starRating?: number,
     ) {
+        const params: Record<string, any> = {};
+
+        if (categories && categories?.length > 0) {
+            params["categories"] = categories.toString();
+        }
+        if (prices && prices?.length > 0) {
+            params["prices"] = prices.toString();
+        }
+        if (colors && colors?.length > 0) {
+            params["colors"] = colors.toString();
+        }
+
+        if (starRating && typeof starRating === "number") {
+            params["starRating"] = starRating;
+        }
         const { data, refresh } = await useFetch(
             "/api/e-commerce/get-all-products",
             {
                 query: {
-                    categories: categories ? categories.toString() : [],
-                    prices: prices ? prices.toString() : [],
-                    colors: colors ? colors.toString() : [],
+                    ...params,
                     page: page.value,
                     limit: limit.value,
                 },
@@ -69,5 +84,6 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         selectedCategories,
         selectedColors,
         selectedPrices,
+        selectedStar,
     };
 });

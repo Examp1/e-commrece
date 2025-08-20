@@ -2,21 +2,18 @@
 const productEcomStore = useProductEcomStore();
 const { singleProductData, productsWithSameCategory } =
     storeToRefs(productEcomStore);
-const productReviewStore = useProductReviewStore()
+const productReviewStore = useProductReviewStore();
 const quantity = ref<number>(1);
 const products = ref([]);
 const route = useRoute();
 
-productEcomStore
-    .fetchSingleProductData(route.params?.slug)
-    .then(async () => {
-        const categoryId = singleProductData?.value?.products?.categoryId;
-        const productId = singleProductData?.value?.products?.id;
+productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
+    const categoryId = singleProductData?.value?.products?.categoryId;
+    const productId = singleProductData?.value?.products?.id;
 
-        productReviewStore.fetcProductReviews(productId)
-        productEcomStore.fetchProductsWithSameCategory(categoryId);
-    });
-
+    productReviewStore.fetcProductReviews(productId);
+    productEcomStore.fetchProductsWithSameCategory(categoryId);
+});
 </script>
 
 <template>
@@ -41,9 +38,13 @@ productEcomStore
                             >
                                 {{ singleProductData?.products?.name }}
                             </h1>
-                            <!-- <StarRating
-                :rating="computeProductReview(singleProductData?.products)"
-              /> -->
+                            <StarRating
+                                :rating="
+                                    computeProductReview(
+                                        singleProductData?.products,
+                                    )
+                                "
+                            />
                         </div>
                         <ProductPrice
                             class="text-xl"

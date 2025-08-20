@@ -18,7 +18,7 @@ defineProps({
     <!-- gray bg -->
     <StarIcon v-for="i in rating <5?(Math.abs(rating-5)):0" :key="i" 
     :fill="'none'"
-     :size="size + ''" class="mr-[2px]" 
+    :size="size + ''" class="mr-[2px]" 
     :style="{ color: rating < i ? '#ccc' : '#ccc' }" />
   </div>
 </template>

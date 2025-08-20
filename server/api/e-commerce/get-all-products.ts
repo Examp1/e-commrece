@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
               .filter((i) => i > 0);
     const colors = Array.isArray(query.colors)
         ? query.colors
-        : ((query.colors as string) || "").split(",").filter((i) => i !== '');
+        : ((query.colors as string) || "").split(",").filter((i) => i !== "");
     const prices = Array.isArray(query.prices)
         ? query.prices
         : ((query.prices as string) || "")
@@ -49,6 +49,12 @@ export default defineEventHandler(async (event) => {
             include: {
                 category: true,
                 images: true,
+                stars: true,
+                _count: {
+                    select: {
+                        reviews: true,
+                    },
+                },
             },
             skip: (page - 1) * limit,
             take: limit,
@@ -63,8 +69,31 @@ export default defineEventHandler(async (event) => {
         }),
     ]);
 
+     const starRatingFilter=query?.starRating?
+    parseInt(query.starRating.toString()):NaN
+    
+    const newProductArray = !Number.isNaN(starRatingFilter)
+
+    ? products.filter((item) => {
+        if (Array.isArray(item.stars)) {
+            if (item.stars.length > 0) {
+                // 4*2=8
+                if (item.stars[0].receivedStars === (starRatingFilter* item._count.reviews)) {
+                    return item
+                }
+
+                if (item.stars[0].receivedStars ===((starRatingFilter* item._count.reviews)+1)) {
+                    return item
+                }
+            }
+        }
+
+
+    }) 
+    : products
+
     return {
-        products,
+        products: newProductArray ,
         metadata: {
             total,
             page,

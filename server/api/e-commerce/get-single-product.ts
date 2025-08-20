@@ -11,6 +11,13 @@ export default defineEventHandler(async (event) => {
             include: {
                 category: true,
                 images: true,
+                stars: true,
+                starPercent: true,
+                _count: {
+                    select: {
+                        reviews: true,
+                    },
+                },
             },
         })
      
