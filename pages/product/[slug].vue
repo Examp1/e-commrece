@@ -3,8 +3,10 @@ const productEcomStore = useProductEcomStore();
 const { singleProductData, productsWithSameCategory } =
     storeToRefs(productEcomStore);
 const productReviewStore = useProductReviewStore();
-const quantity = ref<number>(1);
-const products = ref([]);
+const shoppingCartStore = useShoppingCartStore();
+const { showCart } = storeToRefs(shoppingCartStore);
+
+
 const route = useRoute();
 
 productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
@@ -20,8 +22,7 @@ productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
     <main class="container relative py-6 xl:max-w-7xl">
         <div>
             <Breadcrumb class="mb-6" />
-            <!-- <Cart v-show="showCart" /> -->
-
+            <Cart v-show="showCart" />
             <div
                 class="flex flex-col gap-10 md:flex-row md:justify-between lg:gap-24"
             >
@@ -74,7 +75,6 @@ productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
                                     singleProductData?.products,
                                 )
                             "
-                            :disabled="false"
                             :class="{ loading: true }"
                         />
                     </div>
