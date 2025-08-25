@@ -6,8 +6,6 @@ export const useShoppingCartStore = defineStore(
         const totalPrice = ref<number>(0);
 
         function syncWithLocalStorage() {
-            console.log('syncWithLocalStorage');
-            console.log(shoppingCartData.value);
             localStorage.setItem(
                 "cartData",
                 JSON.stringify(shoppingCartData.value),
@@ -27,7 +25,7 @@ export const useShoppingCartStore = defineStore(
             );
 
             if (productExist.length === 0) {
-                shoppingCartData.value.push({ ...product, quantity: 1 });
+                shoppingCartData.value.push({...product, quantity: 1 });
             }
             getTotalPrice();
         }

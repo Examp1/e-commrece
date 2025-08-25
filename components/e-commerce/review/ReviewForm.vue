@@ -35,7 +35,7 @@ function getSelectedStarNumber(val: number) {
 </script>
 
 <template>
-    <transition class="ease-in-out transform transition-all" name="scale-y">
+    <transition name="scale-y">
         <form @submit.prevent="addComment" class="writeReview">
             <div class="w-full text-gray-500">
                 <div class="p-5 mt-3 grid gap-2 border rounded-lg">
