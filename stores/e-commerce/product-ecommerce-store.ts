@@ -48,18 +48,18 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         page.value = productsData.value?.metadata.page;
     }
 
-    async function fetchSingleProductData(slug: string) {
-        const { data, refresh } = await useFetch(
-            "/api/e-commerce/get-single-product",
-            {
-                query: {
-                    slug,
-                },
-            },
-        );
+    // async function fetchSingleProductData(slug: string) {
+    //     const { data, refresh } = await useFetch(
+    //         "/api/e-commerce/get-single-product",
+    //         {
+    //             query: {
+    //                 slug,
+    //             },
+    //         },
+    //     );
 
-        singleProductData.value = data.value;
-    }
+    //     singleProductData.value = data.value;
+    // }
 
     async function fetchProductsWithSameCategory(categoryId: number) {
         const { data, refresh } = await useFetch(
@@ -79,7 +79,7 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         singleProductData,
         productsWithSameCategory,
         fetchProducts,
-        fetchSingleProductData,
+        // fetchSingleProductData,
         fetchProductsWithSameCategory,
         selectedCategories,
         selectedColors,

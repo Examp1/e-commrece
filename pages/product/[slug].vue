@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import fetchSingleProductData from '~/composables/products-ecom/fetchSingleProductData';
+
 const productEcomStore = useProductEcomStore();
 const { singleProductData, productsWithSameCategory } =
     storeToRefs(productEcomStore);
@@ -6,16 +8,21 @@ const productReviewStore = useProductReviewStore();
 const shoppingCartStore = useShoppingCartStore();
 const { showCart } = storeToRefs(shoppingCartStore);
 
+const defaultQuantity = ref<number>(1)
 
 const route = useRoute();
 
-productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
-    const categoryId = singleProductData?.value?.products?.categoryId;
-    const productId = singleProductData?.value?.products?.id;
+const { data: product } = await fetchSingleProductData(route.params?.slug)
 
-    productReviewStore.fetcProductReviews(productId);
-    productEcomStore.fetchProductsWithSameCategory(categoryId);
-});
+singleProductData.value = product.value
+
+// productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
+//     const categoryId = singleProductData?.value?.products?.categoryId;
+//     const productId = singleProductData?.value?.products?.id;
+
+//     productReviewStore.fetcProductReviews(productId);
+//     productEcomStore.fetchProductsWithSameCategory(categoryId);
+// });
 </script>
 
 <template>
@@ -98,9 +105,9 @@ productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
                         <hr />
                     </div>
 
-                    <div class="flex flex-wrap gap-4">
+                    <!-- <div class="flex flex-wrap gap-4">
                         <WishlistButton />
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="my-32">

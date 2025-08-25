@@ -41,7 +41,7 @@ function reduceQuantity(productId,quantity){
             Low Stock
           </span> -->
         </div>
-         <ProductPrice class="mt-1 text-xs"  :sale-price=" product?.totalProductPrice+' $'" :regular-price="'14 $'" />
+         <ProductPrice class="mt-1 text-xs"  :sale-price="(product?.price * product?.quantity) +' $'" :regular-price="'14 $'" />
       </div>
     
       <div class="inline-flex gap-2 flex-col items-end">

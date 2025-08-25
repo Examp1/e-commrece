@@ -1,8 +1,8 @@
 <script setup>
 const productEcomStore = useProductEcomStore();
-const filterEcomStore = useFilterEcomStore();
+
 const { selectedCategories, selectedColors, selectedPrices, selectedStar } =
-    storeToRefs(filterEcomStore);
+    storeToRefs(productEcomStore);
 
 async function resetFilter() {
     selectedCategories.value = [];

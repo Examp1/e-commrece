@@ -5,11 +5,20 @@ export const useShoppingCartStore = defineStore(
         const showCart = ref<boolean>(false);
         const totalPrice = ref<number>(0);
 
-        function storeCartDataToLocalStorage() {
+        function syncWithLocalStorage() {
+            console.log('syncWithLocalStorage');
+            console.log(shoppingCartData.value);
             localStorage.setItem(
                 "cartData",
                 JSON.stringify(shoppingCartData.value),
             );
+        }
+        function getCartDataFromLocalStorage() {
+            const data = localStorage.getItem("cartData");
+            if (typeof data !== "object") {
+                shoppingCartData.value = JSON.parse(data);
+                getTotalPrice();
+            }
         }
 
         function addProductToCart(product: Record<string, any>) {
@@ -20,41 +29,15 @@ export const useShoppingCartStore = defineStore(
             if (productExist.length === 0) {
                 shoppingCartData.value.push({ ...product, quantity: 1 });
             }
+            getTotalPrice();
         }
         function removeProductToCart(productId: number) {
             const newArray = shoppingCartData.value.filter(
                 (item) => item.id !== productId,
             );
             shoppingCartData.value = [...newArray];
+            getTotalPrice();
         }
-
-        // function addQuantity(productId: number, newQuantity: number) {
-        //     const newArray = shoppingCartData.value.filter(
-        //         (item: any) => item.id === productId,
-        //     );
-        //     if (newArray.length > 0) {
-        //         const { quantity, totalProductPrice, ...restProps } =
-        //             newArray[0];
-        //         const updateQuantity = quantity + newQuantity;
-        //         const updateTotalPrice =
-        //             parseFloat(totalProductPrice) +
-        //             parseFloat(totalProductPrice);
-
-        //         //remove this product and add it again
-        //         const updateProduct = shoppingCartData.value.filter(
-        //             (item: any) => item.id !== productId,
-        //         );
-        //         shoppingCartData.value = [];
-        //         shoppingCartData.value = [...updateProduct];
-        //         shoppingCartData.value.push({
-        //             quantity: updateQuantity,
-        //             totalProductPrice: updateTotalPrice,
-        //             // price:''
-        //             ...restProps,
-        //         });
-        //         storeCartDataToLocalStorage();
-        //     }
-        // }
 
         function addQuantity(productId: number, newQuantity: number) {
             if (newQuantity <= 0) return;
@@ -64,14 +47,14 @@ export const useShoppingCartStore = defineStore(
                     return {
                         ...item,
                         quantity: item.quantity,
-                        totalProductPrice: item.quantity * item.price,
+                        // totalProductPrice: item.quantity * item.price,
                     };
                 } else {
                     return item;
                 }
             });
             getTotalPrice();
-            storeCartDataToLocalStorage();
+            syncWithLocalStorage();
         }
         function reduceQuantity(productId: number, newQuantity: number) {
             if (newQuantity <= 0) return;
@@ -85,57 +68,21 @@ export const useShoppingCartStore = defineStore(
             const updatedQuantity = product.quantity - newQuantity;
 
             if (updatedQuantity <= 0) {
-                removeProductToCart(productId); // Удаляем, если количество <= 0
+                removeProductToCart(productId);
             } else {
-                // Обновляем корзину только если товар не удален
                 shoppingCartData.value = shoppingCartData.value.map((item) =>
                     item.id === productId
                         ? {
                               ...item,
                               quantity: updatedQuantity,
-                              totalProductPrice: updatedQuantity * item.price,
+                              //   totalProductPrice: updatedQuantity * item.price,
                           }
                         : item,
                 );
             }
             getTotalPrice();
-            storeCartDataToLocalStorage(); // Сохраняем в любом случае
+            syncWithLocalStorage();
         }
-        // function reduceQuantity(productId: number, newQuantity: number) {
-        //     const newArray = shoppingCartData.value.filter(
-        //         (item: any) => item.id === productId,
-        //     );
-        //     if (newArray.length > 0) {
-        //         if (newQuantity <= parseFloat(newArray[0].quantity)) {
-        //             const { quantity, totalProductPrice, ...restProps } =
-        //                 newArray[0];
-        //             const updateQuantity = quantity - newQuantity;
-
-        //             if (updateQuantity === 0) {
-        //                 removeProductToCart(productId);
-        //                 storeCartDataToLocalStorage();
-        //             } else {
-        //                 const updateTotalPrice =
-        //                     parseFloat(totalProductPrice) -
-        //                     parseFloat(restProps.price);
-        //                 // const updatePrice=quantity+newQuantity
-
-        //                 //remove this product and add it again
-        //                 const updateProduct = shoppingCartData.value.filter(
-        //                     (item: any) => item.id !== productId,
-        //                 );
-        //                 shoppingCartData.value = [];
-        //                 shoppingCartData.value = [...updateProduct];
-        //                 shoppingCartData.value.push({
-        //                     quantity: updateQuantity,
-        //                     totalProductPrice: updateTotalPrice,
-        //                     ...restProps,
-        //                 });
-        //                 storeCartDataToLocalStorage();
-        //             }
-        //         }
-        //     }
-        // }
 
         function clearOutCart() {
             shoppingCartData.value = [];
@@ -147,7 +94,7 @@ export const useShoppingCartStore = defineStore(
 
         function getTotalPrice() {
             totalPrice.value = shoppingCartData.value.reduce((acc, item) => {
-                return acc + item.price;
+                return acc + item.price * item.quantity;
             }, 0);
         }
 
@@ -167,9 +114,10 @@ export const useShoppingCartStore = defineStore(
             removeProductToCart,
             clearOutCart,
             toggleShoppingCart,
+            syncWithLocalStorage,
             addQuantity,
             reduceQuantity,
-            storeCartDataToLocalStorage,
+            getCartDataFromLocalStorage,
             formatToUsCurreny,
         };
     },
