@@ -1,24 +1,42 @@
 <script setup lang="ts">
-import fetchSingleProductData from '~/composables/products-ecom/fetchSingleProductData';
+import { storeToRefs } from "pinia";
+import {
+    fetchSingleProductData,
+    fetchProductsWithSameCategory,
+    fetcProductReviews,
+} from "~/composables/products-ecom/useProductsComposables";
 
 const productEcomStore = useProductEcomStore();
 const { singleProductData, productsWithSameCategory } =
     storeToRefs(productEcomStore);
 const productReviewStore = useProductReviewStore();
+const { productReviewData } = storeToRefs(productReviewStore);
 const shoppingCartStore = useShoppingCartStore();
 const { showCart } = storeToRefs(shoppingCartStore);
 
-const defaultQuantity = ref<number>(1)
+const defaultQuantity = ref<number>(1);
 
 const route = useRoute();
 
-const { data: product } = await fetchSingleProductData(route.params?.slug)
+const { data: product } = await fetchSingleProductData(route.params.slug);
+singleProductData.value = product.value;
 
-singleProductData.value = product.value
+const categoryId = product.value?.products?.categoryId;
+const productId = product.value?.products?.id;
+
+if (categoryId) {
+    const { data: sameCategory } = await fetchProductsWithSameCategory(
+        categoryId,
+    );
+    productsWithSameCategory.value = sameCategory.value;
+}
+
+if (productId) {
+    const { data: reviews } = await fetcProductReviews(productId);
+    productReviewData.value = reviews.value;
+}
 
 // productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
-//     const categoryId = singleProductData?.value?.products?.categoryId;
-//     const productId = singleProductData?.value?.products?.id;
 
 //     productReviewStore.fetcProductReviews(productId);
 //     productEcomStore.fetchProductsWithSameCategory(categoryId);

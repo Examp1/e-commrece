@@ -2,6 +2,7 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const productsData = ref<any>("");
     const singleProductData = ref(null);
     const productsWithSameCategory = ref(null);
+
     // pagination
     const page = ref<number>(1);
     const limit = ref<number>(10);
@@ -10,6 +11,13 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const selectedColors = ref<string[]>([]);
     const selectedPrices = ref<number[]>([]);
     const selectedStar = ref<number>();
+
+
+    // function setProductsInfo(data) {
+    //     productsData.value = data.value;
+    //     limit.value = productsData.value?.metadata.limit;
+    //     page.value = productsData.value?.metadata.page;
+    // }
 
     async function fetchProducts(
         categories?: number[],
@@ -48,39 +56,24 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         page.value = productsData.value?.metadata.page;
     }
 
-    // async function fetchSingleProductData(slug: string) {
+    // async function fetchProductsWithSameCategory(categoryId: number) {
     //     const { data, refresh } = await useFetch(
-    //         "/api/e-commerce/get-single-product",
+    //         "/api/e-commerce/get-same-category-products",
     //         {
     //             query: {
-    //                 slug,
+    //                 categoryId,
     //             },
     //         },
     //     );
 
-    //     singleProductData.value = data.value;
+    //     productsWithSameCategory.value = data.value;
     // }
-
-    async function fetchProductsWithSameCategory(categoryId: number) {
-        const { data, refresh } = await useFetch(
-            "/api/e-commerce/get-same-category-products",
-            {
-                query: {
-                    categoryId,
-                },
-            },
-        );
-
-        productsWithSameCategory.value = data.value;
-    }
 
     return {
         productsData,
         singleProductData,
         productsWithSameCategory,
         fetchProducts,
-        // fetchSingleProductData,
-        fetchProductsWithSameCategory,
         selectedCategories,
         selectedColors,
         selectedPrices,
