@@ -19,6 +19,7 @@ export const useShoppingCartStore = defineStore(
             }
         }
 
+    
         function addProductToCart(product: Record<string, any>) {
             const productExist = shoppingCartData.value.filter(
                 (item) => item.id === product.id,

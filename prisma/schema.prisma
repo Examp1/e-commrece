@@ -17,6 +17,7 @@ model User {
   otpCode      String
   password     String
   reviews      ProductReview[]
+  orders      Orders[]
 }
 
 model Category {
@@ -40,6 +41,7 @@ model Product {
   images     Image[]
   category   Category @relation(fields: [categoryId], references: [id])
   reviews    ProductReview[]
+  ordersProducts OrdersProducts[]
 }
 
 model ProductStars {
@@ -51,6 +53,7 @@ model ProductStars {
   updatedAt  DateTime @updatedAt
 
 }
+
 model ProductStarPercent {
   id         Int      @id @default(autoincrement()) 
   productId  Int
@@ -61,6 +64,7 @@ model ProductStarPercent {
   updatedAt  DateTime @updatedAt
 
 }
+
 
 model ProductReview {
   id         Int      @id @default(autoincrement()) 
@@ -81,3 +85,24 @@ model Image {
   productId Int
   product   Product @relation(fields: [productId], references: [id])
 }
+
+model Orders {
+  id        Int     @id @default(autoincrement())
+  total Int
+  status String
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  ordersProducts OrdersProducts[]
+  createdAt  DateTime @default(now())
+}
+model OrdersProducts {
+  id        Int     @id @default(autoincrement())
+  orderId Int
+  productId Int
+  quantity Int
+  product   Product @relation(fields: [productId], references: [id])
+  orders Orders @relation(fields: [orderId], references: [id])
+
+  @@unique([orderId, productId])
+}
+

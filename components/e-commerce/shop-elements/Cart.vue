@@ -5,6 +5,18 @@ const { shoppingCartData, totalPrice } = storeToRefs(shoppingCartStore);
 onMounted(() => {
     shoppingCartStore.getCartDataFromLocalStorage();
 });
+
+const userCookie = useCookie("user", userCookieSettings);
+
+async function createOrder() {
+    await $fetch("/api/e-commerce/orders/create-order", {
+        method: "POST",
+        body: {
+            userId: userCookie?.value?.user?.id,
+            products: shoppingCartData.value,
+        },
+    });
+}
 </script>
 
 <template>
@@ -39,6 +51,7 @@ onMounted(() => {
                     v-html="shoppingCartStore.formatToUsCurreny(totalPrice)"
                 />
             </NuxtLink>
+            <div @click="createOrder">order</div>
         </div>
         <!-- Empty Cart Message -->
         <!-- <EmptyCartMessage /> -->

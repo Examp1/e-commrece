@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(["product"]);
+const props = defineProps(["products"]);
 
 const config = useRuntimeConfig();
 const shoppingCartStore = useShoppingCartStore();
@@ -18,7 +18,7 @@ function reduceQuantity(productId, quantity) {
 <template>
     <div
         class="flex items-center gap-3 group"
-        v-for="product in product"
+        v-for="product in products"
         :key="product?.id"
     >
         <NuxtLink :to="`/product/${product.slug}`">
