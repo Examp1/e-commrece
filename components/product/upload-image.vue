@@ -45,6 +45,7 @@ async function uploadImage() {
         loading.value = false;
     }
 }
+
 </script>
 <template>
     <baseModal :show="showUploadImageModal">

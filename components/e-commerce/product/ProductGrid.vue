@@ -7,7 +7,7 @@ await productEcomStore.fetchProducts();
 <template>
     <Transition name="fade" mode="out-in">
         <!-- !!products.length -->
-        <section class="relative w-full">
+        <section v-if="productsData?.products.length" class="relative w-full">
             <TransitionGroup
                 name="shrink"
                 tag="div"
@@ -22,7 +22,7 @@ await productEcomStore.fetchProducts();
             </TransitionGroup>
             <!-- <Pagination /> -->
         </section>
-        <!-- <NoProductsFound  /> -->
+        <NoProductsFound v-else />
     </Transition>
 </template>
 

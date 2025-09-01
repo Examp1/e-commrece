@@ -37,16 +37,16 @@ const links = ref([
 const drawerOpen = ref(true);
 const showMenu = ref(false);
 
-const { $logout } = useNuxtApp()
+const { $logout } = useNuxtApp();
 
 function toggleDrawer() {
     drawerOpen.value = !drawerOpen.value;
 }
+
 </script>
 <template>
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar Drawer -->
-        {{ test }}
         <aside
             :class="[
                 'bg-white shadow-lg h-full transition-all duration-300 flex flex-col',

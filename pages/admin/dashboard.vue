@@ -10,7 +10,6 @@ const orders = await $fetch("/api/admin/orders/get-all-orders", {});
 // })
 </script>
 <template>
-    {{ orders }}
     <div
         class="rounded-2xl border border-gray-200 bg-white pt-4 dark:border-white/[0.05] dark:bg-white/[0.03]"
     >
