@@ -6,6 +6,8 @@ import {
     fetcProductReviews,
 } from "~/composables/products-ecom/useProductsComposables";
 
+const shoppingCartStore = useShoppingCartStore();
+
 const productEcomStore = useProductEcomStore();
 const { singleProductData, productsWithSameCategory } =
     storeToRefs(productEcomStore);
@@ -33,12 +35,6 @@ if (productId) {
     const { data: reviews } = await fetcProductReviews(productId);
     productReviewData.value = reviews.value;
 }
-
-// productEcomStore.fetchSingleProductData(route.params?.slug).then(async () => {
-
-//     productReviewStore.fetcProductReviews(productId);
-//     productEcomStore.fetchProductsWithSameCategory(categoryId);
-// });
 </script>
 
 <template>

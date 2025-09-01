@@ -19,16 +19,17 @@ export const useShoppingCartStore = defineStore(
             }
         }
 
-    
         function addProductToCart(product: Record<string, any>) {
+            console.log(product);
             const productExist = shoppingCartData.value.filter(
                 (item) => item.id === product.id,
             );
 
             if (productExist.length === 0) {
-                shoppingCartData.value.push({...product, quantity: 1 });
+                shoppingCartData.value.push({ ...product, quantity: 1 });
             }
             getTotalPrice();
+            syncWithLocalStorage();
         }
         function removeProductToCart(productId: number) {
             const newArray = shoppingCartData.value.filter(
@@ -36,6 +37,7 @@ export const useShoppingCartStore = defineStore(
             );
             shoppingCartData.value = [...newArray];
             getTotalPrice();
+            syncWithLocalStorage();
         }
 
         function addQuantity(productId: number, newQuantity: number) {
@@ -85,6 +87,7 @@ export const useShoppingCartStore = defineStore(
 
         function clearOutCart() {
             shoppingCartData.value = [];
+            totalPrice.value = 0
         }
 
         function toggleShoppingCart() {
@@ -105,6 +108,15 @@ export const useShoppingCartStore = defineStore(
             return formatted;
         }
 
+        async function createOrder(orderBody: {}) {
+            await $fetch("/api/e-commerce/orders/create-order", {
+                method: "POST",
+                body: orderBody,
+            });
+            clearOutCart()
+            syncWithLocalStorage();
+        }
+
         return {
             showCart,
             shoppingCartData,
@@ -118,6 +130,7 @@ export const useShoppingCartStore = defineStore(
             reduceQuantity,
             getCartDataFromLocalStorage,
             formatToUsCurreny,
+            createOrder,
         };
     },
 );

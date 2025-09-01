@@ -9,12 +9,9 @@ onMounted(() => {
 const userCookie = useCookie("user", userCookieSettings);
 
 async function createOrder() {
-    await $fetch("/api/e-commerce/orders/create-order", {
-        method: "POST",
-        body: {
-            userId: userCookie?.value?.user?.id,
-            products: shoppingCartData.value,
-        },
+    await shoppingCartStore.createOrder({
+        userId: userCookie?.value?.user?.id,
+        products: shoppingCartData.value,
     });
 }
 </script>
@@ -42,16 +39,15 @@ async function createOrder() {
             <CartCard :products="shoppingCartData" />
         </ul>
         <div class="px-8 mb-8">
-            <NuxtLink
-                class="block p-3 text-lg text-center text-white bg-gray-800 rounded-lg shadow-md justify-evenly hover:bg-gray-900"
-                to="/checkout"
+            <div
+                @click="createOrder"
+                class="cursor-pointer block p-3 text-lg text-center text-white bg-gray-800 rounded-lg shadow-md justify-evenly hover:bg-gray-900"
             >
                 <span class="mx-2">Check out</span>
                 <span
                     v-html="shoppingCartStore.formatToUsCurreny(totalPrice)"
                 />
-            </NuxtLink>
-            <div @click="createOrder">order</div>
+            </div>
         </div>
         <!-- Empty Cart Message -->
         <!-- <EmptyCartMessage /> -->
