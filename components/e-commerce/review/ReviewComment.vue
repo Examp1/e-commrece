@@ -7,7 +7,7 @@ const { productReviewData } = storeToRefs(productReviewStore);
 </script>
 <template>
     <div
-        class="divide-y flex-1"
+        class="divide-y flex-1 max-h-[450px] overflow-y-scroll"
         v-for="productReview in productReviewData?.productReviews"
         :key="productReview?.id"
     >

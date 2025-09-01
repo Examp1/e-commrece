@@ -13,12 +13,6 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const selectedStar = ref<number>();
 
 
-    // function setProductsInfo(data) {
-    //     productsData.value = data.value;
-    //     limit.value = productsData.value?.metadata.limit;
-    //     page.value = productsData.value?.metadata.page;
-    // }
-
     async function fetchProducts(
         categories?: number[],
         prices?: number[],
@@ -55,19 +49,6 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         limit.value = productsData.value?.metadata.limit;
         page.value = productsData.value?.metadata.page;
     }
-
-    // async function fetchProductsWithSameCategory(categoryId: number) {
-    //     const { data, refresh } = await useFetch(
-    //         "/api/e-commerce/get-same-category-products",
-    //         {
-    //             query: {
-    //                 categoryId,
-    //             },
-    //         },
-    //     );
-
-    //     productsWithSameCategory.value = data.value;
-    // }
 
     return {
         productsData,

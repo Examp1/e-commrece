@@ -6,7 +6,7 @@ const categoryStore = useCategoryStore();
 const productStore = useProductStore();
 const { data } = await categoryStore.fetchCategories();
 const { productColors } = storeToRefs(productStore);
-const { selectedCategories, selectedColors, selectedPrices, selectedStar } =
+const { selectedCategories, selectedColors, selectedPrices, selectedStar, productsData } =
     storeToRefs(productEcomStore);
 
 async function fetchProductByCategories(categories: number[]) {
@@ -51,7 +51,7 @@ async function fetchProductByStars(star: number) {
     <aside id="filters">
         <OrderByDropdown class="block w-full md:hidden" />
         <div class="relative z-30 grid mb-12 space-y-8 divide-y">
-            <PriceFilter @fetchProducts="fetchProductByPrice" />
+            <PriceFilter @fetchProducts="fetchProductByPrice" :prices="productsData.filter"/>
             <CategoryFilter
                 @fetchProducts="fetchProductByCategories"
                 :categories="data?.categories"

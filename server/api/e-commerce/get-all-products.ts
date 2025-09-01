@@ -40,8 +40,6 @@ export default defineEventHandler(async (event) => {
     // colors,categories,prices
     const [products, total] = await Promise.all([
         prisma.product.findMany({
-            // select * from products where categories IN(1,2) or color IN("red","bue")
-            // or price between 12 and 13
             where: filters.length > 0 ? { AND: filters } : {},
 
             orderBy: {
@@ -57,7 +55,6 @@ export default defineEventHandler(async (event) => {
                     },
                 },
             },
-            // 2-1*limit=10
             skip: (page - 1) * limit,
             take: limit,
         }),
@@ -75,34 +72,49 @@ export default defineEventHandler(async (event) => {
     ]);
 
     //  todo надо потом разобраться с стар рейтингом
-    const starRatingFilter = query?.starRating
-        ? parseInt(query.starRating.toString())
-        : NaN;
+    // const starRatingFilter = query?.starRating
+    //     ? parseInt(query.starRating.toString())
+    //     : NaN;
 
-    const newProductArray = !Number.isNaN(starRatingFilter)
-        ? products.filter((item) => {
-              if (Array.isArray(item.stars)) {
-                  if (item.stars.length > 0) {
-                      if (
-                          item.stars[0].receivedStars ===
-                          starRatingFilter * item._count.reviews
-                      ) {
-                          return item;
-                      }
+    // const newProductArray = !Number.isNaN(starRatingFilter)
+    //     ? products.filter((item) => {
+    //           if (Array.isArray(item.stars)) {
+    //               if (item.stars.length > 0) {
+    //                   if (
+    //                       item.stars[0].receivedStars ===
+    //                       starRatingFilter * item._count.reviews
+    //                   ) {
+    //                       return item;
+    //                   }
 
-                      if (
-                          item.stars[0].receivedStars ===
-                          starRatingFilter * item._count.reviews + 1
-                      ) {
-                          return item;
-                      }
-                  }
-              }
-          })
-        : products;
+    //                   if (
+    //                       item.stars[0].receivedStars ===
+    //                       starRatingFilter * item._count.reviews + 1
+    //                   ) {
+    //                       return item;
+    //                   }
+    //               }
+    //           }
+    //       })
+    //     : products;
+
+
+    const minAndMaxPrices = await prisma.product.aggregate({
+        _min: {
+            price: true
+        },
+        _max: {
+            price: true
+        }
+    })
+
 
     return {
         products: products,
+        filter: {
+            minPrice: minAndMaxPrices._min,
+            maxPrice: minAndMaxPrices._min,
+        },
         metadata: {
             total,
             page,

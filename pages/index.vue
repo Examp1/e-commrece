@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const shoppingCartStore = useShoppingCartStore();
+const { showCart } = storeToRefs(shoppingCartStore);
+</script>
 <template>
     <div class="container flex items-start gap-16">
         <Filters />
@@ -10,5 +13,6 @@
             <ProductGrid />
         </div>
     </div>
+    <Cart v-show="showCart" />
     <!-- <NoProductsFound v-else>Could not fetch products from your store. Please check your configuration.</NoProductsFound> -->
 </template>

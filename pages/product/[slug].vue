@@ -11,8 +11,6 @@ const { singleProductData, productsWithSameCategory } =
     storeToRefs(productEcomStore);
 const productReviewStore = useProductReviewStore();
 const { productReviewData } = storeToRefs(productReviewStore);
-const shoppingCartStore = useShoppingCartStore();
-const { showCart } = storeToRefs(shoppingCartStore);
 
 const defaultQuantity = ref<number>(1);
 
@@ -47,7 +45,6 @@ if (productId) {
     <main class="container relative py-6 xl:max-w-7xl">
         <div>
             <Breadcrumb class="mb-6" />
-            <Cart v-show="showCart" />
             <div
                 class="flex flex-col gap-10 md:flex-row md:justify-between lg:gap-24"
             >
