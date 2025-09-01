@@ -34,7 +34,13 @@ async function submitInput(event) {
         });
         loading.value = false;
         userCookie.value = res.data;
-        router.push("/admin/dashboard");
+
+        if (userCookie.value.user.role === "ADMIN" ) {
+            router.push("/admin/dashboard");
+        } else {
+            router.push("/");
+        }
+
     } catch (error) {
         loading.value = false;
         showApiError(error);
