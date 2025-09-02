@@ -10,7 +10,7 @@
     <div class="mb-2 text-xl font-semibold">Your cart is empty.</div>
     <span class="mb-8">Please, add some products to your cart.</span>
     <NuxtLink
-      to="/products"
+      to="/"
       class="flex items-center justify-center gap-3 p-2 px-3 mt-4 font-semibold text-center text-white rounded-lg shadow-md bg-primary hover:bg-primary-dark">
       Browse our products
     </NuxtLink>

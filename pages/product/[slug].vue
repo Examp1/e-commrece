@@ -14,15 +14,15 @@ const { singleProductData, productsWithSameCategory } =
 const productReviewStore = useProductReviewStore();
 const { productReviewData } = storeToRefs(productReviewStore);
 
-const defaultQuantity = ref<number>(1);
+const productQuantity = ref<number>(1);
 
 const route = useRoute();
 
 const { data: product } = await fetchSingleProductData(route.params.slug);
 singleProductData.value = product.value;
 
-const categoryId = product.value?.products?.categoryId;
-const productId = product.value?.products?.id;
+const categoryId = product.value?.categoryId;
+const productId = product.value?.id;
 
 if (categoryId) {
     const { data: sameCategory } = await fetchProductsWithSameCategory(
@@ -45,7 +45,7 @@ if (productId) {
                 class="flex flex-col gap-10 md:flex-row md:justify-between lg:gap-24"
             >
                 <ProductImageGallery
-                    :images="singleProductData?.products?.images"
+                    :images="singleProductData?.images"
                     class="relative flex-1"
                 />
 
@@ -55,12 +55,12 @@ if (productId) {
                             <h1
                                 class="flex flex-wrap items-center gap-2 mb-2 text-2xl font-sesmibold"
                             >
-                                {{ singleProductData?.products?.name }}
+                                {{ singleProductData?.name }}
                             </h1>
                             <StarRating
                                 :rating="
                                     computeProductReview(
-                                        singleProductData?.products,
+                                        singleProductData,
                                     )
                                 "
                             />
@@ -68,7 +68,7 @@ if (productId) {
                         <ProductPrice
                             class="text-xl"
                             :sale-price="
-                                singleProductData?.products?.price + '$'
+                                singleProductData?.price + '$'
                             "
                             :regular-price="'14 $'"
                         />
@@ -80,7 +80,7 @@ if (productId) {
                         class="fixed bottom-0 left-0 z-10 flex items-center w-full gap-4 p-4 mt-12 bg-white md:static md:bg-transparent bg-opacity-90 md:p-0"
                     >
                         <input
-                            v-model="defaultQuantity"
+                            v-model="productQuantity"
                             type="number"
                             min="1"
                             aria-label="Quantity"
@@ -90,7 +90,8 @@ if (productId) {
                             class="flex-1 w-full md:max-w-xs"
                             @click="
                                 shoppingCartStore.addProductToCart(
-                                    singleProductData?.products,
+                                    singleProductData,
+                                    productQuantity
                                 )
                             "
                             :class="{ loading: true }"
@@ -106,7 +107,7 @@ if (productId) {
                                         class="hover:text-primary"
                                         title="category-name"
                                         >{{
-                                            singleProductData?.products
+                                            singleProductData
                                                 ?.category?.name
                                         }}<span class="comma">, </span>
                                     </NuxtLink>
@@ -130,7 +131,7 @@ if (productId) {
                     You May Also Like <Icon name="uil:github" />
                 </div>
                 <LazyProductRow
-                    :productData="productsWithSameCategory?.products"
+                    :productData="productsWithSameCategory"
                     class="grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
                 />
             </div>

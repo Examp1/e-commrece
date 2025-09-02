@@ -39,7 +39,7 @@ function displayMissingStars(starPercents) {
         <h4 class="font-semibold text-2xl text-gray-900">Customer Reviews</h4>
         <div class="my-2">
             <StarRating
-                :rating="computeProductReview(singleProductData?.products)"
+                :rating="computeProductReview(singleProductData)"
                 class="text-sm mr-2"
             />
         </div>
@@ -47,7 +47,7 @@ function displayMissingStars(starPercents) {
             <!-- percent -->
             <div
                 v-for="rating in displayMissingStars(
-                    singleProductData?.products?.starPercent,
+                    singleProductData?.starPercent,
                 )"
                 :key="rating"
                 class="flex gap-4 items-center"

@@ -35,22 +35,25 @@ async function createOrder() {
             Cart <span> ({{ shoppingCartData.length }}) </span>
         </div>
 
-        <ul class="flex flex-col flex-1 gap-4 p-6 overflow-y-scroll md:p-8">
-            <CartCard :products="shoppingCartData" />
-        </ul>
-        <div class="px-8 mb-8">
-            <div
-                @click="createOrder"
-                class="cursor-pointer block p-3 text-lg text-center text-white bg-gray-800 rounded-lg shadow-md justify-evenly hover:bg-gray-900"
-            >
-                <span class="mx-2">Check out</span>
-                <span
-                    v-html="shoppingCartStore.formatToUsCurreny(totalPrice)"
-                />
+        <template v-if="shoppingCartData.length">
+            <ul class="flex flex-col flex-1 gap-4 p-6 overflow-y-scroll md:p-8">
+                <CartCard :products="shoppingCartData" />
+            </ul>
+            <div class="px-8 mb-8">
+                <div
+                    @click="createOrder"
+                    class="cursor-pointer block p-3 text-lg text-center text-white bg-gray-800 rounded-lg shadow-md justify-evenly hover:bg-gray-900"
+                >
+                    <span class="mx-2">Check out</span>
+                    <span
+                        v-html="shoppingCartStore.formatToUsCurreny(totalPrice)"
+                    />
+                </div>
             </div>
-        </div>
+        </template>
+
         <!-- Empty Cart Message -->
-        <!-- <EmptyCartMessage /> -->
+        <EmptyCartMessage v-else />
 
         <!-- Cart Loading Overlay -->
         <!-- <div  class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-25">

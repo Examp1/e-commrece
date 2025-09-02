@@ -7,7 +7,7 @@ const { singleProductData } = storeToRefs(productEcomStore);
 const productReviewInputs = ref({
     userId: userCookie?.value?.user?.id,
     starNumber: 0,
-    productId: singleProductData.value?.products?.id,
+    productId: singleProductData.value?.id,
     comment: null,
 });
 const rating = ref(0);
