@@ -7,6 +7,9 @@ const props = defineProps({
 
 const show = ref(false);
 
+const productReviewStore = useProductReviewStore();
+const { productReviewData } = storeToRefs(productReviewStore);
+
 const productEcomStore = useProductEcomStore();
 const { singleProductData } = storeToRefs(productEcomStore);
 
@@ -39,7 +42,7 @@ function displayMissingStars(starPercents) {
         <h4 class="font-semibold text-2xl text-gray-900">Customer Reviews</h4>
         <div class="my-2">
             <StarRating
-                :rating="computeProductReview(singleProductData)"
+                :rating="Math.round(productReviewData.avgRating)"
                 class="text-sm mr-2"
             />
         </div>

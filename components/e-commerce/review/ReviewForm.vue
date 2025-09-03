@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { fetcProductReviews } from '~/composables/products-ecom/useProductsComposables';
+
+const productReviewStore = useProductReviewStore();
+const { productReviewData } = storeToRefs(productReviewStore);
+
 const userCookie = useCookie("user", userCookieSettings);
 const productEcomStore = useProductEcomStore();
-const productReviewStore = useProductReviewStore()
 const { singleProductData } = storeToRefs(productEcomStore);
 
 const productReviewInputs = ref({
@@ -14,7 +18,7 @@ const rating = ref(0);
 const hovered = ref(0);
 const loading = ref(false);
 
-async function addComment() {
+async function addReview() {
     try {
         loading.value = true;
         const res = await $fetch("/api/e-commerce/create-review", {
@@ -26,7 +30,8 @@ async function addComment() {
       showApiError(error)
     }
     loading.value = false;
-    await productReviewStore.fetcProductReviews(productReviewInputs.value.productId)
+    const { data: updReviews } = await fetcProductReviews(productReviewInputs.value.productId)
+    productReviewData.value = updReviews
 }
 function getSelectedStarNumber(val: number) {
     productReviewInputs.value.starNumber = val;
@@ -36,7 +41,7 @@ function getSelectedStarNumber(val: number) {
 
 <template>
     <transition name="scale-y">
-        <form @submit.prevent="addComment" class="writeReview">
+        <form @submit.prevent="addReview" class="writeReview">
             <div class="w-full text-gray-500">
                 <div class="p-5 mt-3 grid gap-2 border rounded-lg">
                     <div class="block text-center mb-1.5">

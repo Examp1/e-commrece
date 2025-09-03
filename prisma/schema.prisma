@@ -48,11 +48,12 @@ model Product {
 model ProductStars {
   id         Int      @id @default(autoincrement()) 
   productId  Int
-  receivedStars Int
+  totalStars Int
+  totalReviews Int
+  averageStarsRating Decimal  @db.Decimal(3, 2)
   product Product @relation(fields: [productId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
 }
 
 model ProductStarPercent {
@@ -63,7 +64,6 @@ model ProductStarPercent {
   product Product @relation(fields: [productId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
 }
 
 

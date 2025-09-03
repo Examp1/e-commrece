@@ -81,14 +81,14 @@ export default defineEventHandler(async (event) => {
     //           if (Array.isArray(item.stars)) {
     //               if (item.stars.length > 0) {
     //                   if (
-    //                       item.stars[0].receivedStars ===
+    //                       item.stars[0].totalStars ===
     //                       starRatingFilter * item._count.reviews
     //                   ) {
     //                       return item;
     //                   }
 
     //                   if (
-    //                       item.stars[0].receivedStars ===
+    //                       item.stars[0].totalStars ===
     //                       starRatingFilter * item._count.reviews + 1
     //                   ) {
     //                       return item;

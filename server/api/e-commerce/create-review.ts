@@ -43,33 +43,34 @@ export default defineEventHandler(async (event) => {
         },
     });
 
-    await createProductStarPercent(productId, starNumber)
+    await createProductStarPercent(productId, starNumber);
 
     // if prodId exist
     if (productStar) {
-        // inc stars
-        const actualreceivedStars = productStar?.receivedStars;
-        const updStars = actualreceivedStars + starNumber;
+        const actualtotalStars = productStar?.totalStars;
+        const updStars = actualtotalStars + starNumber;
+        const updTotalReviews = productStar.totalReviews + 1;
         await prisma.productStars.update({
             where: {
                 id: productStar?.id,
             },
             data: {
-                receivedStars: updStars,
+                totalStars: updStars,
+                totalReviews: updTotalReviews,
+                averageStarsRating: updStars / updTotalReviews 
             },
         });
     } else {
         await prisma.productStars.create({
             data: {
-                receivedStars: starNumber,
+                totalStars: starNumber,
+                totalReviews: 1,
+                averageStarsRating: starNumber,
                 productId,
             },
         });
     }
 
-
-
-    
     return { message: "Review saved successfuly" };
 });
 
@@ -77,14 +78,13 @@ async function createProductStarPercent(productId: number, starNumber: number) {
     const starPercentExist = await prisma.productStarPercent.findFirst({
         where: {
             productId,
-            star: starNumber
+            star: starNumber,
         },
     });
     // if prodId exist
     if (starPercentExist) {
         const nmbTimes = starPercentExist?.times;
         const updTimes = nmbTimes + 1;
-        console.log(updTimes);
         await prisma.productStarPercent.update({
             where: {
                 id: starPercentExist?.id,
@@ -100,7 +100,7 @@ async function createProductStarPercent(productId: number, starNumber: number) {
             data: {
                 times: 1,
                 productId,
-                star: starNumber
+                star: starNumber,
             },
         });
     }

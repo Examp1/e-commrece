@@ -1,19 +1,15 @@
 <script setup>
 const productReviewStore = useProductReviewStore();
 const { productReviewData } = storeToRefs(productReviewStore);
- const config=useRuntimeConfig()
+const config = useRuntimeConfig();
 
- const DEFAULT_USER_AVATAR=config?.public?.DEFAULT_USER_AVATAR
+const DEFAULT_USER_AVATAR = config?.public?.DEFAULT_USER_AVATAR;
 </script>
 <template>
-    <div
-        class="divide-y flex-1 max-h-[450px] overflow-y-scroll"
-        v-for="productReview in productReviewData?.productReviews"
-        :key="productReview?.id"
-    >
+    <div class="divide-y flex-1 max-h-[450px] overflow-y-scroll">
         <div
             class="my-2 py-8"
-            v-for="customerReview in productReview?.reviews"
+            v-for="customerReview in productReviewData.reviews"
             :key="customerReview?.id"
         >
             <div class="flex gap-4 items-center">
@@ -36,7 +32,7 @@ const { productReviewData } = storeToRefs(productReviewStore);
                         class="text-sm"
                     />
                 </div>
-          </div>
+            </div>
             <div class="mt-4 text-gray-700 italic prose-sm">
                 {{ customerReview?.comment }}
             </div>

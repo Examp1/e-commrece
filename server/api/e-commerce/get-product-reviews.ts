@@ -11,14 +11,17 @@ export default defineEventHandler(async (event) => {
         });
     }
 
-    const productReviews = await prisma.product.findMany({
+    const product = await prisma.product.findUnique({
         where: { id: parseInt(productId) },
         include: {
             reviews: true,
+            stars: true,
         },
     });
 
     return {
-        productReviews,
+        avgRating: product?.stars[0].averageStarsRating,
+        totalReviews: product?.stars[0].totalReviews,
+        reviews: product?.reviews,
     };
 });
