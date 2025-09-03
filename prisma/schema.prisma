@@ -27,20 +27,21 @@ model Category {
 }
 
 model Product {
-  id         Int      @id @default(autoincrement())
-  name       String
-  color      String
-  //price      String
-  price      Decimal  @db.Decimal(10, 2)
-  categoryId Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  slug       String?  @db.VarChar(200)
-  stars      ProductStars[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  color       String
+  price       Decimal  @db.Decimal(10, 2)
+  old_price   Decimal?  @db.Decimal(10, 2)
+  categoryId  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  slug        String?  @db.VarChar(200)
+  description String? @db.VarChar(1000)
+  stars       ProductStars[]
   starPercent ProductStarPercent[]
-  images     Image[]
-  category   Category @relation(fields: [categoryId], references: [id])
-  reviews    ProductReview[]
+  images      Image[]
+  category    Category @relation(fields: [categoryId], references: [id])
+  reviews     ProductReview[]
   ordersProducts OrdersProducts[]
 }
 

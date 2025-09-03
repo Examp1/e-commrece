@@ -7,10 +7,11 @@ const shoppingCartStore = useShoppingCartStore();
 const FALL_BACK_IMG_URL = config?.public?.FALL_BACK_IMG_URL;
 
 function addQuantity(productId, quantity) {
-    shoppingCartStore.addQuantity(productId);
+    console.log(quantity);
+    shoppingCartStore.addQuantity(productId, quantity);
 }
 
-function reduceQuantity(productId, quantity) {
+function reduceQuantity(productId) {
     shoppingCartStore.reduceQuantity(productId);
 }
 </script>

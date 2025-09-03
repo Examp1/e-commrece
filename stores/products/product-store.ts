@@ -4,7 +4,9 @@ export const useProductStore = defineStore("product-store", () => {
         name: "",
         color: "",
         price: 0,
+        old_price: 0,
         categoryId: "",
+        description: "",
     });
     const productId = ref(null);
     const productColors = ref([
@@ -36,6 +38,7 @@ export const useProductStore = defineStore("product-store", () => {
                 ...headers,
             },
             query: {
+                search: search.value,
                 page: page.value,
                 limit: limit.value,
             },

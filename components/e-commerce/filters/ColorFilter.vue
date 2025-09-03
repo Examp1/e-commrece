@@ -15,7 +15,7 @@ const checkboxChanged = (color) => {
     } else {
         selectedColors.value.push(color);
     }
-    emit("fetchProducts", selectedColors.value);
+    emit("fetchProducts", {colors: selectedColors.value});
 };
 </script>
 

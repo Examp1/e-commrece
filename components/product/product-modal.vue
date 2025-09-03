@@ -2,6 +2,7 @@
 import BaseBtn from "../base-components/base-btn.vue";
 import BaseInput from "../base-components/base-input.vue";
 import BaseModal from "../base-components/base-modal.vue";
+import BaseSelect from "../base-components/base-select.vue";
 
 const props = defineProps(["show", "categories"]);
 const emit = defineEmits(["toggleProductModal, getProducts"]);
@@ -18,7 +19,6 @@ async function createOrUpdateProduct() {
             body: JSON.stringify(poroductInputs.value),
         });
         poroductInputs.value = {};
-
         loading.value = false;
         edit.value = false;
         emit("getProducts");
@@ -28,6 +28,9 @@ async function createOrUpdateProduct() {
         showApiError(error);
     }
 }
+onUnmounted(() => {
+    poroductInputs.value = {};
+});
 </script>
 <template>
     <base-modal v-show="show">
@@ -36,42 +39,43 @@ async function createOrUpdateProduct() {
         </template>
 
         <template #body>
-            <base-input
-                class="mb-3"
+            <BaseInput
+                label="Product name"
                 v-model="poroductInputs.name"
                 placeholder="Product name"
             />
-            <select
-                class="mb-3 focus:bg-focus-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 focus:border-gray-700 focus:focus:border-brand-800"
-                v-model="poroductInputs.color"
-            >
-                <option value="">colors</option>
-                <option
-                    v-for="color in productColors"
-                    :key="'color'"
-                    :value="color"
-                >
-                    {{ color }}
-                </option>
-            </select>
-            <base-input
-                class="mb-3"
-                v-model="poroductInputs.price"
-                min="1"
-                placeholder="Product price"
+            <BaseInput
+                label="Product description"
+                v-model="poroductInputs.description"
+                placeholder="Product description"
             />
-            <select
-                class="focus:bg-focus-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 focus:border-gray-700 focus:focus:border-brand-800"
+            <BaseSelect
+                label="Product color"
+                v-model="poroductInputs.color"
+                :options="productColors"
+                placeholder="colors"
+            />
+            <div class="grid grid-cols-2 gap-5">
+                <BaseInput
+                    label="Product price"
+                    v-model="poroductInputs.price"
+                    min="1"
+                    placeholder="Product price"
+                />
+                <BaseInput
+                    label="Product old price"
+                    v-model="poroductInputs.old_price"
+                    min="1"
+                    placeholder="Product old price"
+                />
+            </div>
+            <BaseSelect
+                label="Product category"
                 v-model="poroductInputs.categoryId"
-            >
-                <option
-                    v-for="category in categories"
-                    :key="'category' + category.id"
-                    :value="category.id"
-                >
-                    {{ category.name }}
-                </option>
-            </select>
+                :options="categories"
+                placeholder="category"
+                custom-value="id"
+            />
         </template>
 
         <template #footer>

@@ -19,7 +19,7 @@ function checkboxChanged(categoryId) {
     } else {
         selectedCategories.value.push(categoryId);
     }
-    emit('fetchProducts', selectedCategories.value)
+    emit("fetchProducts", { category: selectedCategories.value });
 }
 </script>
 

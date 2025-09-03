@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import TrashIcon from '../icons/TrashIcon.vue';
+import TrashIcon from "../icons/TrashIcon.vue";
 
 defineProps(["productsData"]);
-const emit = defineEmits(["editProduct", "deleteProduct", "uploadImage", "showUploadedImages"]);
+const emit = defineEmits([
+    "editProduct",
+    "deleteProduct",
+    "uploadImage",
+    "showUploadedImages",
+]);
 
 const productStore = useProductStore();
 const { search } = storeToRefs(productStore);
@@ -29,9 +34,11 @@ const searchProduct = _debounce(async function (event) {
             <tr class="bg-gray-100 text-left">
                 <td class="border border-gray-300 py-2 px-4">#</td>
                 <td class="border border-gray-300 py-2 px-4">Name</td>
+                <td class="border border-gray-300 py-2 px-4">Description</td>
                 <td class="border border-gray-300 py-2 px-4">Category</td>
                 <td class="border border-gray-300 py-2 px-4">Color</td>
                 <td class="border border-gray-300 py-2 px-4">Price</td>
+                <td class="border border-gray-300 py-2 px-4">Old Price</td>
                 <td class="border border-gray-300 py-2 px-4">Action</td>
             </tr>
         </thead>
@@ -49,13 +56,19 @@ const searchProduct = _debounce(async function (event) {
                     {{ product?.name }}
                 </td>
                 <td class="border border-gray-300 py-2 px-4">
+                    {{ product?.description.slice(0, 20)+'...' || '-' }}
+                </td>
+                <td class="border border-gray-300 py-2 px-4">
                     {{ product?.categoryId }}
                 </td>
                 <td class="border border-gray-300 py-2 px-4">
                     {{ product?.color }}
                 </td>
                 <td class="border border-gray-300 py-2 px-4">
-                    {{ product?.price }} $
+                    {{ product?.price + "$" }}
+                </td>
+                <td class="border border-gray-300 py-2 px-4">
+                    {{ product?.old_price ? product?.old_price + "$" : "-" }}
                 </td>
 
                 <td class="flex border 0 border-gray-300 py-2 px-4">

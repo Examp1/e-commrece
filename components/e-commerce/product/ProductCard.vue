@@ -42,7 +42,7 @@ const FALL_BACK_IMG_URL = config?.public?.FALL_BACK_IMG_URL;
             <ProductPrice
                 class="text-sm"
                 :sale-price="product?.price + ' $'"
-                :regular-price="'14 $'"
+                :regular-price="product?.old_price + '$'"
             />
         </div>
     </div>

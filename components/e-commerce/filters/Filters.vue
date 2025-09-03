@@ -12,63 +12,89 @@ const {
     productsData,
 } = storeToRefs(productEcomStore);
 
-async function fetchProductByCategories(categories: number[]) {
-    selectedCategories.value = categories;
-    await productEcomStore.fetchProducts(
-        categories,
-        selectedPrices.value,
-        selectedColors.value,
-        selectedStar.value,
-    );
+const filterParamsObj = ref({});
+async function filterProductBy(filters: {}) {
+    updateFilterParamsObj(filters);
+    await productEcomStore.filterProducts(filterParamsObj.value);
 }
-async function fetchProductByColors(colors: string[]) {
-    selectedColors.value = colors;
-    await productEcomStore.fetchProducts(
-        selectedCategories.value,
-        selectedPrices.value,
-        colors,
-        selectedStar.value,
-    );
+
+function updateFilterParamsObj(filters: {}) {
+    if (Object.keys(filterParamsObj.value).length) {
+        for (const key in filterParamsObj.value) {
+            if (Object.keys(filters).includes(key)) {
+                filterParamsObj.value[key] = filters[key];
+            } else {
+                console.log(key, "else");
+                filterParamsObj.value = {
+                    ...filterParamsObj.value,
+                    ...filters,
+                };
+            }
+        }
+    } else {
+        filterParamsObj.value = { ...filters };
+    }
+    console.log(filterParamsObj.value);
 }
-async function fetchProductByPrice(prices: number[]) {
-    selectedPrices.value = prices;
-    await productEcomStore.fetchProducts(
-        selectedCategories.value,
-        prices,
-        selectedColors.value,
-        selectedStar.value,
-    );
-}
-async function fetchProductByStars(star: number) {
-    selectedStar.value = star;
-    await productEcomStore.fetchProducts(
-        selectedCategories.value,
-        selectedPrices.value,
-        selectedColors.value,
-        star,
-    );
-}
+
+// async function fetchProductByCategories(categories: number[]) {
+//     selectedCategories.value = categories;
+//     await productEcomStore.fetchProducts(
+//         categories,
+//         selectedPrices.value,
+//         selectedColors.value,
+//         selectedStar.value,
+//     );
+// }
+// async function fetchProductByColors(colors: string[]) {
+//     selectedColors.value = colors;
+//     await productEcomStore.fetchProducts(
+//         selectedCategories.value,
+//         selectedPrices.value,
+//         colors,
+//         selectedStar.value,
+//     );
+// }
+// async function fetchProductByPrice(prices: number[]) {
+//     selectedPrices.value = prices;
+//     await productEcomStore.fetchProducts(
+//         selectedCategories.value,
+//         prices,
+//         selectedColors.value,
+//         selectedStar.value,
+//     );
+// }
+// async function fetchProductByStars(star: number) {
+//     selectedStar.value = star;
+//     await productEcomStore.fetchProducts(
+//         selectedCategories.value,
+//         selectedPrices.value,
+//         selectedColors.value,
+//         star,
+//     );
+// }
 </script>
 
 <template>
     <aside id="filters">
+        {{ filterParamsObj }}
         <OrderByDropdown class="block w-full md:hidden" />
         <div class="relative z-30 grid mb-12 space-y-8 divide-y">
             <PriceFilter
-                @fetchProducts="fetchProductByPrice"
+                @fetchProducts="filterProductBy"
                 :prices="productsData"
             />
             <CategoryFilter
-                @fetchProducts="fetchProductByCategories"
+                @fetchProducts="filterProductBy"
                 :categories="data?.categories"
             />
 
             <ColorFilter
-                @fetchProducts="fetchProductByColors"
+                @fetchProducts="filterProductBy"
                 :colors="productColors"
             />
 
-            <LazyStarRatingFilter @fetchProducts="fetchProductByStars" />
+            <StarRatingFilter @fetchProducts="filterProductBy" />
             <LazyResetFiltersButton />
         </div>
     </aside>

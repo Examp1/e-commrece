@@ -59,18 +59,14 @@ if (productId) {
                             </h1>
                             <StarRating
                                 :rating="
-                                    computeProductReview(
-                                        singleProductData,
-                                    )
+                                    computeProductReview(singleProductData)
                                 "
                             />
                         </div>
                         <ProductPrice
                             class="text-xl"
-                            :sale-price="
-                                singleProductData?.price + '$'
-                            "
-                            :regular-price="'14 $'"
+                            :sale-price="singleProductData?.price + '$'"
+                            :regular-price="singleProductData.old_price + '$'"
                         />
                     </div>
 
@@ -91,7 +87,7 @@ if (productId) {
                             @click="
                                 shoppingCartStore.addProductToCart(
                                     singleProductData,
-                                    productQuantity
+                                    productQuantity,
                                 )
                             "
                             :class="{ loading: true }"
@@ -106,15 +102,19 @@ if (productId) {
                                     <NuxtLink
                                         class="hover:text-primary"
                                         title="category-name"
-                                        >{{
-                                            singleProductData
-                                                ?.category?.name
+                                        >{{ singleProductData?.category?.name
                                         }}<span class="comma">, </span>
                                     </NuxtLink>
                                 </div>
                             </div>
                         </div>
                         <hr />
+                        <div class="my-8">
+                            <span class="text-gray-400">Product description</span>
+                            <div class="text-base">
+                                {{ singleProductData.description }}
+                            </div>
+                        </div>
                     </div>
 
                     <!-- <div class="flex flex-wrap gap-4">

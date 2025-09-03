@@ -12,6 +12,25 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const selectedPrices = ref<number[]>([]);
     const selectedStar = ref<number>();
 
+    async function filterProducts(filter: {
+        categories?: number[];
+        prices?: number[];
+        colors?: string[];
+        starRating?: number;
+    }) {
+        const res = await $fetch("/api/e-commerce/get-all-products", {
+            query: {
+                ...filter,
+                page: page.value,
+                limit: limit.value,
+            },
+        });
+
+        // console.log(res);
+        productsData.value = res;
+        limit.value = productsData.value?.metadata.limit;
+        page.value = productsData.value?.metadata.page;
+    }
 
     async function fetchProducts(
         categories?: number[],
@@ -55,6 +74,7 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         singleProductData,
         productsWithSameCategory,
         fetchProducts,
+        filterProducts,
         selectedCategories,
         selectedColors,
         selectedPrices,

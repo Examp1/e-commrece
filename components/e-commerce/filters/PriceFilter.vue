@@ -14,7 +14,7 @@ const price = ref([minPrice, maxPrice]);
 const isOpen = ref(true);
 
 const applyPrice = () => {
-    emit("fetchProducts", price.value);
+    emit("fetchProducts", {price: price.value.join(',')});
 };
 </script>
 
