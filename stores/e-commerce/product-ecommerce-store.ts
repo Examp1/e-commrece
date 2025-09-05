@@ -7,10 +7,8 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const page = ref<number>(1);
     const limit = ref<number>(10);
 
-    const selectedCategories = ref<number[]>([]);
-    const selectedColors = ref<string[]>([]);
-    const selectedPrices = ref<number[]>([]);
-    const selectedStar = ref<number>();
+    // filter
+    const filterParams = ref({})
 
     async function filterProducts(filter: {
         categories?: number[];
@@ -26,7 +24,6 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
             },
         });
 
-        // console.log(res);
         productsData.value = res;
         limit.value = productsData.value?.metadata.limit;
         page.value = productsData.value?.metadata.page;
@@ -75,9 +72,6 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         productsWithSameCategory,
         fetchProducts,
         filterProducts,
-        selectedCategories,
-        selectedColors,
-        selectedPrices,
-        selectedStar,
+        filterParams
     };
 });

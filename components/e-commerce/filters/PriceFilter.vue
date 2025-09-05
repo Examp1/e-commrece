@@ -3,7 +3,7 @@ defineProps(['prices'])
 
 import Slider from "@vueform/slider";
 
-const emit = defineEmits(["fetchProducts"]);
+const emit = defineEmits(["filterProducts"]);
 
 const minPrice = 0;
 const maxPrice = 10000;
@@ -14,7 +14,7 @@ const price = ref([minPrice, maxPrice]);
 const isOpen = ref(true);
 
 const applyPrice = () => {
-    emit("fetchProducts", {price: price.value.join(',')});
+    emit("filterProducts", {price: price.value.join(',')});
 };
 </script>
 

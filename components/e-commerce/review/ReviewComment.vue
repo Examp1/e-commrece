@@ -9,7 +9,7 @@ const DEFAULT_USER_AVATAR = config?.public?.DEFAULT_USER_AVATAR;
     <div class="divide-y flex-1 max-h-[450px] overflow-y-scroll">
         <div
             class="my-2 py-8"
-            v-for="customerReview in productReviewData.reviews"
+            v-for="customerReview in productReviewData?.reviews"
             :key="customerReview?.id"
         >
             <div class="flex gap-4 items-center">

@@ -1,14 +1,13 @@
 <script setup>
-const productEcomStore = useProductEcomStore();
-const { selectedStar } = storeToRefs(productEcomStore);
-
 const isOpen = ref(true);
 
-const emit = defineEmits(["fetchProducts"]);
+const selectedStar = ref(0)
+
+const emit = defineEmits(["filterProducts"]);
 
 const radioClicked = (rating) => {
     selectedStar.value = parseInt(rating);
-    emit("fetchProducts", { starRating: parseInt(rating) });
+    emit("filterProducts", { starRating: parseInt(rating) });
 };
 </script>
 

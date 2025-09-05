@@ -12,7 +12,7 @@ const show = ref(1);
                 :class="show === 1 ? 'active' : ''"
                 @click.prevent="show = 1"
             >
-                Reviews ({{ productReviewData.totalReviews }})
+                Reviews ({{ productReviewData?.totalReviews || 0 }})
             </button>
         </nav>
         <div class="tab-contents">

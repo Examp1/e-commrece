@@ -4,7 +4,7 @@ const props = defineProps({
     label: { type: String, default: "" },
     showCount: { type: Boolean, default: false },
 });
-const emit = defineEmits(["fetchProducts"]);
+const emit = defineEmits(["filterProducts"]);
 
 const isOpen = ref(true);
 const selectedCategories = ref([]);
@@ -19,7 +19,7 @@ function checkboxChanged(categoryId) {
     } else {
         selectedCategories.value.push(categoryId);
     }
-    emit("fetchProducts", { category: selectedCategories.value });
+    emit("filterProducts", { category: selectedCategories.value });
 }
 </script>
 

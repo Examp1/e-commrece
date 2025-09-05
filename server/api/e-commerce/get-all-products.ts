@@ -26,6 +26,8 @@ export default defineEventHandler(async (event) => {
               .map(Number)
               .filter((i) => i > 0);
 
+    const starRating = query.starRating;
+
     if (categories.length > 0) {
         filters.push({ categoryId: { in: categories } });
     }
@@ -33,13 +35,21 @@ export default defineEventHandler(async (event) => {
         filters.push({ color: { in: colors } });
     }
     if (prices.length === 2) {
-        // filters.push({ price: { gte: prices[0].toString(), lte: prices[1].toString() } })
         filters.push({ price: { gte: prices[0], lte: prices[1] } });
+    }
+
+    if (starRating) {
+        filters.push({
+            stars: {
+                some: { averageStarsRating: { gte: +starRating, lte: 5 } },
+            },
+        });
     }
 
     // colors,categories,prices
     const [products, total] = await Promise.all([
         prisma.product.findMany({
+
             where: filters.length > 0 ? { AND: filters } : {},
 
             orderBy: {
@@ -71,49 +81,20 @@ export default defineEventHandler(async (event) => {
         }),
     ]);
 
-    //  todo надо потом разобраться с стар рейтингом
-    // const starRatingFilter = query?.starRating
-    //     ? parseInt(query.starRating.toString())
-    //     : NaN;
-
-    // const newProductArray = !Number.isNaN(starRatingFilter)
-    //     ? products.filter((item) => {
-    //           if (Array.isArray(item.stars)) {
-    //               if (item.stars.length > 0) {
-    //                   if (
-    //                       item.stars[0].totalStars ===
-    //                       starRatingFilter * item._count.reviews
-    //                   ) {
-    //                       return item;
-    //                   }
-
-    //                   if (
-    //                       item.stars[0].totalStars ===
-    //                       starRatingFilter * item._count.reviews + 1
-    //                   ) {
-    //                       return item;
-    //                   }
-    //               }
-    //           }
-    //       })
-    //     : products;
-
-
     const minAndMaxPrices = await prisma.product.aggregate({
         _min: {
-            price: true
+            price: true,
         },
         _max: {
-            price: true
-        }
-    })
-
+            price: true,
+        },
+    });
 
     return {
         products: products,
         filter: {
             minPrice: minAndMaxPrices._min,
-            maxPrice: minAndMaxPrices._min,
+            maxPrice: minAndMaxPrices._max,
         },
         metadata: {
             total,
@@ -123,3 +104,30 @@ export default defineEventHandler(async (event) => {
         },
     };
 });
+
+//  todo надо потом разобраться с стар рейтингом
+// const starRatingFilter = query?.starRating
+//     ? parseInt(query.starRating.toString())
+//     : NaN;
+
+// const newProductArray = !Number.isNaN(starRatingFilter)
+//     ? products.filter((item) => {
+//           if (Array.isArray(item.stars)) {
+//               if (item.stars.length > 0) {
+//                   if (
+//                       item.stars[0].totalStars ===
+//                       starRatingFilter * item._count.reviews
+//                   ) {
+//                       return item;
+//                   }
+
+//                   if (
+//                       item.stars[0].totalStars ===
+//                       starRatingFilter * item._count.reviews + 1
+//                   ) {
+//                       return item;
+//                   }
+//               }
+//           }
+//       })
+//     : products;

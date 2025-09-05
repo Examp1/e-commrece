@@ -30,7 +30,7 @@ const FALL_BACK_IMG_URL = config?.public?.FALL_BACK_IMG_URL;
             />
         </NuxtLink>
         <div class="p-2">
-            <StarRating :rating="computeProductReview(product)" />
+            <StarRating :rating="Math.floor(product?.stars?.[0]?.averageStarsRating) || 0" />
 
             <NuxtLink :to="`/product/${product?.slug}`" :title="product?.name">
                 <h2

@@ -5,7 +5,7 @@ const selectedColors = ref([]);
 const filterTitle = ref("Color");
 const isOpen = ref(true);
 
-const emit = defineEmits(["fetchProducts"]);
+const emit = defineEmits(["filterProducts"]);
 
 const checkboxChanged = (color) => {
     const colorExist = selectedColors.value.some((c) => c === color);
@@ -15,7 +15,7 @@ const checkboxChanged = (color) => {
     } else {
         selectedColors.value.push(color);
     }
-    emit("fetchProducts", {colors: selectedColors.value});
+    emit("filterProducts", {colors: selectedColors.value});
 };
 </script>
 

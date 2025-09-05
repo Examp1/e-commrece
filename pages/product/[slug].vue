@@ -58,9 +58,7 @@ if (productId) {
                                 {{ singleProductData?.name }}
                             </h1>
                             <StarRating
-                                :rating="
-                                    computeProductReview(singleProductData)
-                                "
+                                :rating="Math.floor(productReviewData?.averageStarsRating || 0)"
                             />
                         </div>
                         <ProductPrice
@@ -110,7 +108,9 @@ if (productId) {
                         </div>
                         <hr />
                         <div class="my-8">
-                            <span class="text-gray-400">Product description</span>
+                            <span class="text-gray-400"
+                                >Product description</span
+                            >
                             <div class="text-base">
                                 {{ singleProductData.description }}
                             </div>
