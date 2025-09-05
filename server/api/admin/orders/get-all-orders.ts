@@ -7,16 +7,12 @@ export default defineEventHandler(async (event) => {
         // TODO filter
         where: {},
         orderBy: {
-            createdAt: 'desc'
+            createdAt: "desc",
         },
-        // include: {
-        //     id: true,
-        //     total: true,
-        //     status: true,
-        // }
-    })
+        include: {
+            user: { select: { name: true } },
+        },
+    });
 
-
-    return orders
-
-})
+    return orders;
+});

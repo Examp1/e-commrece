@@ -23,7 +23,7 @@ const userCookie = useCookie("user", userCookieSettings);
                     :alt="'link-title'"
                 />
                 <div class="account-dropdown">
-                    <NuxtLink to="/checkout" class="hover:bg-gray-100"
+                    <NuxtLink to="/" class="hover:bg-gray-100"
                         ><Icon name="ion:person-outline" size="16" /><span
                             >My Account</span
                         ></NuxtLink

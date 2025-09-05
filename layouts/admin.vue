@@ -24,9 +24,9 @@ const links = ref([
         link: "/admin/products",
     },
     {
-        title: "Payments",
+        title: "Orders",
         icon: PaymentIcon,
-        link: "/admin/payments",
+        link: "/admin/orders",
     },
     {
         title: "Users",
