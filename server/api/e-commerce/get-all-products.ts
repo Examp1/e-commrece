@@ -31,9 +31,11 @@ export default defineEventHandler(async (event) => {
     if (categories.length > 0) {
         filters.push({ categoryId: { in: categories } });
     }
+    
     if (colors.length > 0) {
         filters.push({ color: { in: colors } });
     }
+
     if (prices.length === 2) {
         filters.push({ price: { gte: prices[0], lte: prices[1] } });
     }
@@ -45,8 +47,8 @@ export default defineEventHandler(async (event) => {
             },
         });
     }
+    
 
-    // colors,categories,prices
     const [products, total] = await Promise.all([
         prisma.product.findMany({
 
