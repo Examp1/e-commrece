@@ -1,8 +1,9 @@
 type eventType = "change" | "plus" | "minus";
-
 export const useShoppingCartStore = defineStore(
     "shopping-cart-ecommerce-store",
     () => {
+        const router = useRouter();
+        
         const shoppingCartData = ref([]);
         const showCart = ref<boolean>(false);
         const totalPrice = ref<number>(0);
@@ -73,7 +74,6 @@ export const useShoppingCartStore = defineStore(
             syncWithLocalStorage();
         }
         function reduceQuantity(productId: number) {
-    
             const product = shoppingCartData.value.find(
                 (cartItem) => cartItem.id === productId,
             );
@@ -126,12 +126,26 @@ export const useShoppingCartStore = defineStore(
         }
 
         async function createOrder(orderBody: {}) {
-            await $fetch("/api/e-commerce/orders/create-order", {
-                method: "POST",
-                body: orderBody,
-            });
+            const response = await $fetch(
+                "/api/e-commerce/orders/create-order",
+                {
+                    method: "POST",
+                    body: orderBody,
+                },
+            );
             clearOutCart();
             syncWithLocalStorage();
+            if (response.orderLink) {
+                router.push(response.orderLink);
+            }
+        }
+        async function getOrderById(orderId: number) {
+            return await $fetch("/api/e-commerce/orders/get-order-by-id", {
+                method: "POST",
+                body: {
+                    orderId,
+                },
+            });
         }
 
         return {
@@ -148,6 +162,7 @@ export const useShoppingCartStore = defineStore(
             getCartDataFromLocalStorage,
             formatToUsCurreny,
             createOrder,
+            getOrderById,
         };
     },
 );

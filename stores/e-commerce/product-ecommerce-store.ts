@@ -29,49 +29,12 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         page.value = productsData.value?.metadata.page;
     }
 
-    async function fetchProducts(
-        categories?: number[],
-        prices?: number[],
-        colors?: string[],
-        starRating?: number,
-    ) {
-        const params: Record<string, any> = {};
-
-        if (categories && categories?.length > 0) {
-            params["categories"] = categories.toString();
-        }
-        if (prices && prices?.length > 0) {
-            params["prices"] = prices.toString();
-        }
-        if (colors && colors?.length > 0) {
-            params["colors"] = colors.toString();
-        }
-
-        if (starRating && typeof starRating === "number") {
-            params["starRating"] = starRating;
-        }
-        const { data, refresh } = await useFetch(
-            "/api/e-commerce/get-all-products",
-            {
-                query: {
-                    ...params,
-                    page: page.value,
-                    limit: limit.value,
-                },
-            },
-        );
-
-        productsData.value = data.value;
-        limit.value = productsData.value?.metadata.limit;
-        page.value = productsData.value?.metadata.page;
-    }
-
     return {
         productsData,
         singleProductData,
         productsWithSameCategory,
-        fetchProducts,
+        // fetchProducts,
         filterProducts,
-        filterParams
+        filterParams,
     };
 });

@@ -1,7 +1,10 @@
 <script setup>
+import { fetchProducts } from "~/composables/products-ecom/useProductsComposables";
+
 const productEcomStore = useProductEcomStore();
 const { productsData } = storeToRefs(productEcomStore);
-await productEcomStore.fetchProducts();
+const { data } = await fetchProducts();
+productsData.value = data.value
 </script>
 
 <template>

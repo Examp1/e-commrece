@@ -1,4 +1,5 @@
 <script setup>
+const router = useRouter()
 const shoppingCartStore = useShoppingCartStore();
 const { shoppingCartData, totalPrice } = storeToRefs(shoppingCartStore);
 

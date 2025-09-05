@@ -48,5 +48,8 @@ export default defineEventHandler(async (event) => {
     }
     // });
 
-    return { message: "Orded created successfuly" };
+    return {
+        orderLink: `/order-${order.id}` , 
+        message: "Orded created successfuly"
+     };
 });
