@@ -38,7 +38,7 @@ function updateFilterParamsObj(filters: {}) {
         <div class="relative z-30 grid mb-12 space-y-8 divide-y">
             <PriceFilter
                 @filterProducts="filterProductBy"
-                :prices="productsData"
+                :prices="productsData.filter"
             />
             <CategoryFilter
                 @filterProducts="filterProductBy"

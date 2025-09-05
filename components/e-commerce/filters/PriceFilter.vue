@@ -1,12 +1,11 @@
 <script setup>
-defineProps(['prices'])
-
+const props = defineProps(['prices'])
 import Slider from "@vueform/slider";
 
 const emit = defineEmits(["filterProducts"]);
 
-const minPrice = 0;
-const maxPrice = 10000;
+const minPrice = +props.prices?.minPrice.price || 0;
+const maxPrice = +props.prices?.maxPrice.price || 10000;
 const currencySymbol = "$";
 
 const price = ref([minPrice, maxPrice]);
@@ -16,6 +15,7 @@ const isOpen = ref(true);
 const applyPrice = () => {
     emit("filterProducts", {prices: price.value.join(',')});
 };
+
 </script>
 
 <template>
