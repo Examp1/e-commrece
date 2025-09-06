@@ -1,5 +1,6 @@
 import prisma from "~/lib/prisma";
-export default defineEventHandler(async (event) => {
+import { withAuth } from "~/utils/withAuth";
+export default withAuth(async (event) => {
     const query = getQuery(event);
     const search = query?.search as string;
     const page = parseInt(query?.page as string) || 1;

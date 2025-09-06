@@ -7,12 +7,20 @@ export default defineEventHandler(async (event) => {
         // TODO filter
         where: {},
         orderBy: {
-            createdAt: "desc",
+            createdAt: "asc",
+        },
+        omit: {
+            userId: true,
         },
         include: {
             user: { select: { name: true } },
         },
     });
 
-    return orders;
+    const transformedOrders = orders.map((order) => ({
+        ...order,
+        user: order.user.name, // превращаем {name: "John"} в "John"
+    }));
+
+    return transformedOrders;
 });

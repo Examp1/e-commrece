@@ -1,4 +1,5 @@
 <script setup>
+import { markRaw } from "vue";
 import CategoryIcon from "~/components/icons/CategoryIcon.vue";
 import DashboardIcon from "~/components/icons/DashboardIcon.vue";
 import PaymentIcon from "~/components/icons/PaymentIcon.vue";
@@ -10,27 +11,27 @@ const userCookie = useCookie("user", userCookieSettings);
 const links = ref([
     {
         title: "Dashboard",
-        icon: DashboardIcon,
+        icon: markRaw(DashboardIcon),
         link: "/admin/dashboard",
     },
     {
         title: "Categories",
-        icon: CategoryIcon,
+        icon: markRaw(CategoryIcon),
         link: "/admin/categories",
     },
     {
         title: "Products",
-        icon: ProductIcon,
+        icon: markRaw(ProductIcon),
         link: "/admin/products",
     },
     {
         title: "Orders",
-        icon: PaymentIcon,
+        icon: markRaw(PaymentIcon),
         link: "/admin/orders",
     },
     {
         title: "Users",
-        icon: UserIcon,
+        icon: markRaw(UserIcon),
         link: "/admin/users",
     },
 ]);

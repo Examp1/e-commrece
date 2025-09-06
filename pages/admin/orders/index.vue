@@ -19,7 +19,7 @@ const orders = await $fetch("/api/admin/orders/get-all-orders", {});
                     Orders
                 </h3>
             </div>
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <!-- <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <form>
                     <div class="relative">
                         <button
@@ -47,7 +47,7 @@ const orders = await $fetch("/api/admin/orders/get-all-orders", {});
                         />
                     </div>
                 </form>
-            </div>
+            </div> -->
         </div>
         <div class="overflow-hidden">
             <div class="max-w-full px-5 overflow-x-auto sm:px-6">
@@ -75,12 +75,12 @@ const orders = await $fetch("/api/admin/orders/get-all-orders", {});
                             <th
                                 class="font-bold px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400"
                             >
-                                user
+                                created
                             </th>
                             <th
                                 class="font-bold px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400"
                             >
-                                created
+                                user
                             </th>
 
                             <th
@@ -95,8 +95,7 @@ const orders = await $fetch("/api/admin/orders/get-all-orders", {});
                         class="divide-y divide-gray-100 dark:divide-white/[0.05]"
                     >
                         <tr>
-                            {{ orderItem }}
-                            <!-- <td
+                            <td
                                 v-for="order in orderItem"
                                 class="px-4 py-3 text-gray-700 whitespace-nowrap text-theme-sm dark:text-gray-400"
                             >
@@ -107,17 +106,18 @@ const orders = await $fetch("/api/admin/orders/get-all-orders", {});
                                 class="px-4 py-4 text-gray-700 text-theme-sm dark:text-gray-400"
                             >
                                 <div class="flex gap-5">
-                                    <button
+                                    <NuxtLink
+                                        :to="`orders/order-${orderItem.id}`"
                                         class="text-xs flex w-full rounded-lg px-3 py-2 text-left font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
-                                        View More</button
+                                        View More</NuxtLink
                                     ><button
                                         class="text-xs flex w-full rounded-lg px-3 py-2 text-left font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                                     >
                                         Delete
                                     </button>
                                 </div>
-                            </td> -->
+                            </td>
                         </tr>
                     </tbody>
                 </table>
