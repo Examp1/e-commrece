@@ -1,6 +1,6 @@
 export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const productsData = ref<any>("");
-    const singleProductData = ref(null);
+    const singleProductData: IProduct = ref(undefined);
     const productsWithSameCategory = ref(null);
 
     // pagination
@@ -8,7 +8,7 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const limit = ref<number>(10);
 
     // filter
-    const filterParams = ref({})
+    const filterParams = ref({});
 
     async function filterProducts(filter: {
         categories?: number[];

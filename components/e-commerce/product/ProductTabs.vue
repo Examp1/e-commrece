@@ -1,7 +1,20 @@
 <script setup lang="ts">
+const productEcomStore = useProductEcomStore();
+const { singleProductData } = storeToRefs(productEcomStore);
+
 const productReviewStore = useProductReviewStore();
 const { productReviewData } = storeToRefs(productReviewStore);
 const show = ref(1);
+
+const { data } = await useFetch("/api/e-commerce/get-product-reviews", {
+    query: {
+        productId: singleProductData.value.id,
+    },
+});
+
+if (data.value) {
+    productReviewData.value = data.value;
+}
 </script>
 
 <template>

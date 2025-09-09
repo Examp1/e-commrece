@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { fetcProductReviews } from '~/composables/products-ecom/useProductsComposables';
 
 const productReviewStore = useProductReviewStore();
-const { productReviewData } = storeToRefs(productReviewStore);
 
 const userCookie = useCookie("user", userCookieSettings);
 const productEcomStore = useProductEcomStore();
@@ -30,8 +28,8 @@ async function addReview() {
       showApiError(error)
     }
     loading.value = false;
-    const { data: updReviews } = await fetcProductReviews(productReviewInputs.value.productId)
-    productReviewData.value = updReviews
+    productReviewStore.refreshReviews
+ 
 }
 function getSelectedStarNumber(val: number) {
     productReviewInputs.value.starNumber = val;

@@ -1,10 +1,29 @@
 <script setup>
-const props = defineProps(["productData"]);
+const productEcomStore = useProductEcomStore();
+const { productsWithSameCategory } = storeToRefs(productEcomStore);
+
+const props = defineProps(["categoryId"]);
+
+const { data } = await useLazyFetch(
+    "/api/e-commerce/get-same-category-products",
+    {
+        query: {
+            categoryId: props.categoryId,
+        },
+    },
+);
+
+if (data.value) {
+    productsWithSameCategory.value = data.value.products;
+}
 </script>
 
 <template>
     <div class="grid gap-8">
-        <template v-for="(product, idx) in productData" :key="product.id">
+        <template
+            v-for="(product, idx) in productsWithSameCategory"
+            :key="product.id"
+        >
             <ProductCard v-if="idx <= 4" class="w-full" :product="product" />
         </template>
 

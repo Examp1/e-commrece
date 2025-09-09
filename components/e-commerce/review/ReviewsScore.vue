@@ -35,6 +35,7 @@ function displayMissingStars(starPercents) {
         return newStarPercents;
     }
 }
+
 </script>
 
 <template>
@@ -42,7 +43,7 @@ function displayMissingStars(starPercents) {
         <h4 class="font-semibold text-2xl text-gray-900">Customer Reviews</h4>
         <div class="my-2">
             <StarRating
-                :rating="Math.floor(productReviewData?.averageStarsRating || 0)"
+                :rating="Math.floor(productReviewData?.avgRating || 0)"
                 class="text-sm mr-2"
             />
         </div>

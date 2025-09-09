@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import {
-    fetchSingleProductData,
-    fetchProductsWithSameCategory,
-    fetcProductReviews,
-} from "~/composables/products-ecom/useProductsComposables";
-
 const shoppingCartStore = useShoppingCartStore();
 
 const productEcomStore = useProductEcomStore();
-const { singleProductData, productsWithSameCategory } =
-    storeToRefs(productEcomStore);
+const { singleProductData } = storeToRefs(productEcomStore);
+
 const productReviewStore = useProductReviewStore();
 const { productReviewData } = storeToRefs(productReviewStore);
 
@@ -18,27 +12,21 @@ const productQuantity = ref<number>(1);
 
 const route = useRoute();
 
-const { data: product } = await fetchSingleProductData(route.params.slug);
-singleProductData.value = product.value;
+const { data } = await useAsyncData(`product-page-${route.params.slug}`, () =>
+    $fetch("/api/e-commerce/get-single-product", {
+        query: {
+            slug: route.params.slug,
+        },
+    }),
+);
 
-const categoryId = product.value?.categoryId;
-const productId = product.value?.id;
-
-if (categoryId) {
-    const { data: sameCategory } = await fetchProductsWithSameCategory(
-        categoryId,
-    );
-    productsWithSameCategory.value = sameCategory.value;
-}
-
-if (productId) {
-    const { data: reviews } = await fetcProductReviews(productId);
-    productReviewData.value = reviews.value;
+if (data.value) {
+    singleProductData.value = data.value;
 }
 </script>
 
 <template>
-    <main class="container relative py-6 xl:max-w-7xl">
+    <main v-if="singleProductData" class="container relative py-6 xl:max-w-7xl">
         <div>
             <Breadcrumb class="mb-6" />
             <div
@@ -58,13 +46,17 @@ if (productId) {
                                 {{ singleProductData?.name }}
                             </h1>
                             <StarRating
-                                :rating="Math.floor(productReviewData?.averageStarsRating || 0)"
+                                :rating="
+                                    Math.floor(
+                                        productReviewData?.avgRating || 0,
+                                    )
+                                "
                             />
                         </div>
                         <ProductPrice
                             class="text-xl"
                             :sale-price="singleProductData?.price + '$'"
-                            :regular-price="singleProductData.old_price + '$'"
+                            :regular-price="singleProductData?.old_price + '$'"
                         />
                     </div>
 
@@ -98,6 +90,7 @@ if (productId) {
                                 <span class="text-gray-400">Category :</span>
                                 <div class="product-categories">
                                     <NuxtLink
+                                        :to="`/category/${singleProductData?.category?.name}`"
                                         class="hover:text-primary"
                                         title="category-name"
                                         >{{ singleProductData?.category?.name
@@ -131,7 +124,7 @@ if (productId) {
                     You May Also Like <Icon name="uil:github" />
                 </div>
                 <LazyProductRow
-                    :productData="productsWithSameCategory"
+                    :categoryId="singleProductData?.categoryId"
                     class="grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
                 />
             </div>
