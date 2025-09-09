@@ -1,17 +1,26 @@
 <script setup lang="ts">
 const productEcomStore = useProductEcomStore();
-const { productsData, page, limit } = storeToRefs(productEcomStore);
+const { productsData, page, limit, categories } = storeToRefs(productEcomStore);
 
-const { data, refresh } = await useAsyncData("all-products-page", () =>
-    $fetch("/api/e-commerce/get-all-products", {
+const { data, refresh } = await useAsyncData("all-products-page", async () => {
+    const products = await $fetch("/api/e-commerce/get-all-products", {
         query: {
             page: page.value,
             limit: limit.value,
         },
-    }),
-);
-if (data.value) {
-    productsData.value = data.value;
+    });
+    const categories = await $fetch("/api/e-commerce/get-all-categories");
+    return {
+        products,
+        categories,
+    };
+});
+
+if (data.value?.products) {
+    productsData.value = data.value.products;
+}
+if (data.value?.categories) {
+    categories.value = data.value.categories;
 }
 </script>
 <template>

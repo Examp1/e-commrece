@@ -1,7 +1,8 @@
 export const useProductEcomStore = defineStore("product-ecom-store", () => {
     const productsData = ref<any>("");
-    const singleProductData: IProduct = ref(undefined);
+    const singleProductData = ref<IProduct | undefined>(undefined);
     const productsWithSameCategory = ref(null);
+    const categories = ref(undefined)
 
     // pagination
     const page = ref<number>(1);
@@ -32,6 +33,7 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     return {
         page,
         limit,
+        categories,
         productsData,
         singleProductData,
         productsWithSameCategory,

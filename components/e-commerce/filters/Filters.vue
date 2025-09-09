@@ -1,13 +1,8 @@
 <script setup lang="ts">
 const productEcomStore = useProductEcomStore();
-const categoryStore = useCategoryStore();
 const productStore = useProductStore();
-const { data } = await categoryStore.fetchCategories();
 const { productColors } = storeToRefs(productStore);
-const {
-    productsData,
-    filterParams,
-} = storeToRefs(productEcomStore);
+const { productsData, filterParams, categories } = storeToRefs(productEcomStore);
 
 async function filterProductBy(filters: {}) {
     updateFilterParamsObj(filters);
@@ -42,7 +37,7 @@ function updateFilterParamsObj(filters: {}) {
             />
             <CategoryFilter
                 @filterProducts="filterProductBy"
-                :categories="data?.categories"
+                :categories="categories"
             />
 
             <ColorFilter
