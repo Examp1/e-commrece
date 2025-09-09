@@ -30,6 +30,8 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
     }
 
     return {
+        page,
+        limit,
         productsData,
         singleProductData,
         productsWithSameCategory,

@@ -1,16 +1,13 @@
 <script setup>
-import { fetchProducts } from "~/composables/products-ecom/useProductsComposables";
-
 const productEcomStore = useProductEcomStore();
 const { productsData } = storeToRefs(productEcomStore);
-const { data } = await fetchProducts();
-productsData.value = data.value
+
 </script>
 
 <template>
     <Transition name="fade" mode="out-in">
         <!-- !!products.length -->
-        <section v-if="productsData?.products.length" class="relative w-full">
+        <section v-if="productsData?.products?.length" class="relative w-full">
             <TransitionGroup
                 name="shrink"
                 tag="div"
