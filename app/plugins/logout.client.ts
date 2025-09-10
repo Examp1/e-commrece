@@ -1,4 +1,4 @@
-import { userCookieSettings } from './../utils/user.cookie.settings';
+import { userCookieSettings } from '../utils/user.cookie.settings';
 export default defineNuxtPlugin({
     name: "logout",
     parallel: true,

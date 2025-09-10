@@ -1,4 +1,4 @@
-import prisma from "~/lib/prisma";
+import prisma from "@@/lib/prisma";
 import { productShema } from "./modules/validate-product";
 import slugify from "slugify";
 export default defineEventHandler(async (event) => {

@@ -6,7 +6,7 @@ export default defineNuxtPlugin({
             const statusCode = error.value?.statusCode;
             if (statusCode === 401) {
                 window.location.href = "/auth/signin";
-                showError("Unauthenticated!");
+                showCustomError("Unauthenticated!");
             }
         });
     },

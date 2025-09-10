@@ -19,6 +19,7 @@ const { data, refresh } = await useAsyncData("all-products-page", async () => {
 if (data.value?.products) {
     productsData.value = data.value.products;
 }
+
 if (data.value?.categories) {
     categories.value = data.value.categories;
 }

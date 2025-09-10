@@ -1,4 +1,4 @@
-import prisma from "~/lib/prisma";
+import prisma from "@@/lib/prisma";
 import { comparePassword } from "./modules/bcrypt";
 import { loginShema } from "./modules/validateUser";
 import { signAccessToken, signRefreshToken } from "./modules/jwtToken";

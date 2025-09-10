@@ -1,4 +1,4 @@
-import prisma from "~/lib/prisma";
+import prisma from "@@/lib/prisma";
 import { deleteProductShema } from "./modules/validate-product";
 export default defineEventHandler(async (event) => {
     const { id } = await readBody(event);

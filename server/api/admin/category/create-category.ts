@@ -1,4 +1,4 @@
-import prisma from "~/lib/prisma";
+import prisma from "@@/lib/prisma";
 import { categoryShema } from "./modules/validate-category";
 // import { withAuth } from "~/utils/withAuth";
 export default defineEventHandler(async (event) => {

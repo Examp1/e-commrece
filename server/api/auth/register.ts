@@ -1,4 +1,4 @@
-import prisma from "~/lib/prisma";
+import prisma from "@@/lib/prisma";
 import { hashPassword } from "./modules/bcrypt";
 import { registerShema } from "./modules/validateUser";
 import { generateOTP } from "./modules/generate-otp-code";

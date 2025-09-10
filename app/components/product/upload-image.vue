@@ -38,10 +38,10 @@ async function uploadImage() {
             emit("getProducts");
             loading.value = false;
         } else {
-            showError("Select the Image");
+            showCustomError("Select the Image");
         }
     } catch (error) {
-        showError(error?.message);
+        showCustomError(error?.message);
         loading.value = false;
     }
 }

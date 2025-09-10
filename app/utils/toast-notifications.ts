@@ -3,7 +3,7 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 
 const toast = useToast()
 
-export function showError(message:string) {
+export function showCustomError(message:string) {
   toast.error(message, {
     position: 'bottom-right',
     duration: 4000,

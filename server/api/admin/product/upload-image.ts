@@ -2,7 +2,7 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import prisma from "~/lib/prisma";
+import prisma from "@@/lib/prisma";
 
 // Setup multer disk storage
 const storage = multer.diskStorage({

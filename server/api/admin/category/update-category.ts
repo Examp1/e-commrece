@@ -1,4 +1,4 @@
-import prisma from "~/lib/prisma";
+import prisma from "@@/lib/prisma";
 import { categoryShema } from "./modules/validate-category";
 export default defineEventHandler(async (event) => {
     const { name, id } = await readBody(event);

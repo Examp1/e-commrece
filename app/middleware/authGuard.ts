@@ -1,5 +1,5 @@
 import { getHeader, createError, H3Event } from "h3";
-import { verifyToken } from "~/server/api/auth/modules/jwtToken";
+import { verifyToken } from "@@/server/api/auth/modules/jwtToken";
 
 export async function authGuard(event: H3Event) {
     const authHeader = getHeader(event, "authorization");
