@@ -2,7 +2,7 @@
 const productEcomStore = useProductEcomStore();
 const { productsData, page, limit, categories } = storeToRefs(productEcomStore);
 
-const { data, refresh } = await useAsyncData("all-products-page", async () => {
+const { data, refresh } = useLazyAsyncData("all-products-page", async () => {
     const products = await $fetch("/api/e-commerce/get-all-products", {
         query: {
             page: page.value,

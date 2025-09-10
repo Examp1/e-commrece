@@ -1,13 +1,20 @@
 <script setup>
 const productEcomStore = useProductEcomStore();
 const { productsData } = storeToRefs(productEcomStore);
-
 </script>
 
 <template>
     <Transition name="fade" mode="out-in">
         <!-- !!products.length -->
-        <section v-if="productsData?.products?.length" class="relative w-full">
+        <section class="relative w-full">
+            <!-- <template v-if="!productsData?.products?.length">
+                <div v-for="i in 10" class="relative group" :key="'sekeleton' + i">
+                    <UiSkeleton clases="w-full h-[280px] mb-4 rounded-lg" />
+                    <UiSkeleton clases="w-full h-[20px] mb-4" />
+                    <UiSkeleton clases="w-full h-[20px] mb-4" />
+                    <UiSkeleton clases="w-full h-[20px] mb-4" />
+                </div>
+            </template> -->
             <TransitionGroup
                 name="shrink"
                 tag="div"
@@ -22,7 +29,7 @@ const { productsData } = storeToRefs(productEcomStore);
             </TransitionGroup>
             <!-- <Pagination /> -->
         </section>
-        <NoProductsFound v-else />
+        <!-- <NoProductsFound v-else /> -->
     </Transition>
 </template>
 

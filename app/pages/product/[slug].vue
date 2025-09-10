@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
 const shoppingCartStore = useShoppingCartStore();
 
 const productEcomStore = useProductEcomStore();

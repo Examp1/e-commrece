@@ -6,7 +6,6 @@ const imgHeight = Math.round(imgWidth * 1.125);
 const config = useRuntimeConfig();
 
 const FALL_BACK_IMG_URL = config?.public?.FALL_BACK_IMG_URL;
-
 </script>
 
 <template>
@@ -30,7 +29,11 @@ const FALL_BACK_IMG_URL = config?.public?.FALL_BACK_IMG_URL;
             />
         </NuxtLink>
         <div class="p-2">
-            <StarRating :rating="Math.floor(product?.stars?.[0]?.averageStarsRating) || 0" />
+            <StarRating
+                :rating="
+                    Math.floor(product?.stars?.[0]?.averageStarsRating) || 0
+                "
+            />
 
             <NuxtLink :to="`/product/${product?.slug}`" :title="product?.name">
                 <h2
