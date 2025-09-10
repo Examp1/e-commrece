@@ -5,7 +5,7 @@ const { productsWithSameCategory } = storeToRefs(productEcomStore);
 const props = defineProps(["categoryId"]);
 
 const { data } = await useLazyFetch(
-    "/api/e-commerce/get-same-category-products",
+    "/api/e-commerce/products/get-same-category-products",
     {
         query: {
             categoryId: props.categoryId,

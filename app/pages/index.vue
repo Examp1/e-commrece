@@ -2,14 +2,14 @@
 const productEcomStore = useProductEcomStore();
 const { productsData, page, limit, categories } = storeToRefs(productEcomStore);
 
-const { data, refresh } = useLazyAsyncData("all-products-page", async () => {
-    const products = await $fetch("/api/e-commerce/get-all-products", {
+const { data, refresh } = await useLazyAsyncData("all-products-page", async () => {
+    const products = await $fetch("/api/e-commerce/products/get", {
         query: {
             page: page.value,
             limit: limit.value,
         },
     });
-    const categories = await $fetch("/api/e-commerce/get-all-categories");
+    const categories = await $fetch("/api/e-commerce/categories/get-all-categories");
     return {
         products,
         categories,

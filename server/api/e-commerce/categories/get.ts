@@ -4,6 +4,13 @@ export default defineEventHandler(async (event) => {
         orderBy: {
             id: "desc",
         },
+        include: {
+            _count: {
+                select: {
+                    products: true,
+                },
+            },
+        },
     });
 
     return product;

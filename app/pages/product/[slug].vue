@@ -12,7 +12,7 @@ const productQuantity = ref<number>(1);
 const route = useRoute();
 
 const { data } = await useAsyncData(`product-page-${route.params.slug}`, () =>
-    $fetch("/api/e-commerce/get-single-product", {
+    $fetch("/api/e-commerce/products/get-by-id", {
         query: {
             slug: route.params.slug,
         },

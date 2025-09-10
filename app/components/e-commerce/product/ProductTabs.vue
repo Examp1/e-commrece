@@ -6,7 +6,7 @@ const productReviewStore = useProductReviewStore();
 const { productReviewData } = storeToRefs(productReviewStore);
 const show = ref(1);
 
-const { data } = await useFetch("/api/e-commerce/get-product-reviews", {
+const { data } = await useFetch("/api/e-commerce/products/get-product-reviews", {
     query: {
         productId: singleProductData.value.id,
     },

@@ -17,7 +17,7 @@ export const useProductEcomStore = defineStore("product-ecom-store", () => {
         colors?: string[];
         starRating?: number;
     }) {
-        const res = await $fetch("/api/e-commerce/get-all-products", {
+        const res = await $fetch("/api/e-commerce/products/get", {
             query: {
                 ...filter,
                 page: page.value,
